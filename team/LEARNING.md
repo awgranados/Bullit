@@ -7,7 +7,7 @@ Below is a table of our teams familiarity with each technology on a scale of 1 t
 | Name    | Git/GitHub | React Native | JavaScript  |
 | ------- | ---------- | ----- | --- |
 | Hao  | 3 | 1 | 2 |
-| Alexander  | | | |
+| Alexander  | 3 | 1 | 2 |
 | Ricardo    | | | |
 | Aditya    | | | |
 | Stanley     | | | |
