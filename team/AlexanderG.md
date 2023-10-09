@@ -1,0 +1,1 @@
+My name is Alexander Granados, and I am a 4th year CS student. I do not have experience with ReactNative, but I do have some experience with mobile development. I am excited to learn ReactNative and hopefully apply my React and Javascript experience.
