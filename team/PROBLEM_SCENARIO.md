@@ -1,1 +1,2 @@
 
+Many students do not have a car and sometimes need to travel between towns. Carpool is a eco-friendly way of traveling. We wish to explore making an app where students who are driving to another town can post carpool and students who do not own a car can join the carpool and pay the fuel fee for the ride. We hope to provide users a safe, eco-friendly and efficient way for traveling bettwen towns.
