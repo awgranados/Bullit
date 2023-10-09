@@ -2,7 +2,7 @@
 ## Meeting Details  
 
 Project: Carpool app  
-Mentor: Self-Mentored ;)  
+Mentor: Self-Mentored
 Meeting Time: Friday 10/06/23  
 Type of Meeting: First Meeting  
 Team: Aditya Patil [x], Alexander Granados [x], Ricardo Hinojosa [x], Hao Wu [x], Stanley Su []
