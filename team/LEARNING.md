@@ -8,6 +8,6 @@ Below is a table of our teams familiarity with each technology on a scale of 1 t
 | -------   | ---------- | ----- | --- |
 | Hao       | 3 | 1 | 2 |
 | Alexander | 3 | 1 | 2 |
-| Ricardo   | | | |
+| Ricardo   | 3 | 1 | 3 |
 | Aditya    | 3 | 1 | 2 |
 | Stanley   | 4 | 1 | 2 |
