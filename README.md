@@ -7,3 +7,7 @@ We wish to explore making an app where students driving to another town can post
 # Members
 
 Alexander Granados - awgranados
+Hao Wu - haostevewu
+Ricardo Hinojosa- asojonih08
+Aditya Patil - adityapatil834
+Stanley Su - StanleySu1
