@@ -12,3 +12,4 @@ Scrum Master: Alexander Granados
 - Discussed meeting time for 4th standup meeting  
 - Worked on README.md
 - Discussed and worked on team norms
+- Brainstorming app names
