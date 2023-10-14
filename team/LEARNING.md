@@ -14,7 +14,21 @@ Below is a table of our teams familiarity with each technology on a scale of 1 t
 
 
 ## Participation in the forum:
-- Hao shared a Youtube video link for introducing React Native and Expo: https://www.youtube.com/watch?v=fQhH5SK2yTU
-- Stanley shared a Youtube video tutorial link for building and deploying a React Native App: https://youtu.be/mJ3bGvy0WAY?si=J-Qh0xSrGNLybK3y
+- Hao shared a Youtube video link for introducing React Native and Expo: https://www.youtube.com/watch?v=fQhH5SK2yTU  
+- Stanley shared a Youtube video tutorial link for building and deploying a React Native App: https://youtu.be/mJ3bGvy0WAY?si=J-Qh0xSrGNLybK3y  
 - Ricardo shared a link for Getting started with using Firebase services for React Native apps using React Native CLI or Expo CLI: https://rnfirebase.io/ 
-- Aditya liked the post by Rithwik Adicherla: setting up dev environment (very important!): https://reactnative.dev/docs/environment-setup
+- Aditya liked the post by Rithwik Adicherla: setting up dev environment (very important!): https://reactnative.dev/docs/environment-setup  
+
+
+## Benefits and challenges:
+Benefits:
+- Cross-platform Development (Android or iOS)  
+- Pre-made libariesnn
+- React Native is still very popular in the market, learning and managing this skill will benefit our future job   
+- Community support since React Native is popular and is based on Javascript which is a popular language so there is a lot of reusable code
+- Supports live and hot reloading so code is instantly visible without recompiling app  
+
+Challenges:
+- UI & UX Limitations, achieving the 100% same look for Android and iOS might be difficult
+- Relies on Third party libraries so may not be able to access certain ones if not updated
+- Doesn’t support parallel threading
