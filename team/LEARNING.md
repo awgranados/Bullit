@@ -11,3 +11,10 @@ Below is a table of our teams familiarity with each technology on a scale of 1 t
 | Ricardo   | 3 | 1 | 3 |
 | Aditya    | 3 | 1 | 2 |
 | Stanley   | 4 | 1 | 2 |
+
+
+## Participation in the forum:
+- Hao shared a Youtube video link for introducing React Native and Expo: https://www.youtube.com/watch?v=fQhH5SK2yTU
+- Stanley shared a Youtube video tutorial link for building and deploying a React Native App: https://youtu.be/mJ3bGvy0WAY?si=J-Qh0xSrGNLybK3y
+- Ricardo shared a link for Getting started with using Firebase services for React Native apps using React Native CLI or Expo CLI: https://rnfirebase.io/ 
+- Aditya liked the post by Rithwik Adicherla: setting up dev environment (very important!): https://reactnative.dev/docs/environment-setup
