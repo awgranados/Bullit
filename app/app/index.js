@@ -1,4 +1,5 @@
 import { SafeAreaView, View, Text} from 'react-native';
+import LoginButton from './button';
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
                     }}>
                     Hello World
                 </Text>
+                <LoginButton text='login' /*onPress={}*//>
             </View>
         </SafeAreaView>
     )
