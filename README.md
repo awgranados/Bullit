@@ -15,3 +15,13 @@ Ricardo Hinojosa- asojonih08
 Aditya Patil - adityapatil834
 
 Stanley Su - StanleySu1
+
+# Tech Stack
+
+To create the app, we will be using React Native, Expo, Firebase.
+
+# User Roles
+
+- Student passengers can look for rides.  
+- Student drivers can offer rides.  
+- Admins can check and delete inpropriate ride offers.  
