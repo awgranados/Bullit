@@ -21,6 +21,7 @@ Here's the team's refelection about things to start/stop/continue:
 * Working on issues
 * Making pull requests
 * Commucating the progress we are making on each feature
+* Create your own branches
 * Use retro software to present retros and vote on the most relavant items. 
  E.g. https://www.retrospected.com/game/O71O0P-SI
 
@@ -34,3 +35,11 @@ Here's the team's refelection about things to start/stop/continue:
 * Coming up with user stories
 * Assigning issues between group members
 * Communication using slack
+
+## Retro Assessment
+
+I used the Start/Stop/Continue retro template. Each team member wrote down the things they think should start/stop/continue using the Retrospected website and voted on them and then explained why they think so.
+
+This reto went pretty well. All team members shared about their reflection for the team to improve upon. These opinions are very helpful in improving the efficiency of teamwork. 
+
+My advice to the next person leading a retro is to come up with a main topic at the start of the retro meeting. This may help the teammates to better reflect.
