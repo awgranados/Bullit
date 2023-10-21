@@ -20,6 +20,7 @@ Here's the team's refelection about things to start/stop/continue:
 * Set up OAuth
 * Working on issues
 * Making pull requests
+* Commucating the progress we are making on each feature
 * Use retro software to present retros and vote on the most relavant items. 
  E.g. https://www.retrospected.com/game/O71O0P-SI
 
