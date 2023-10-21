@@ -23,7 +23,7 @@ Here's the team's refelection about things to start/stop/continue:
 * Commucating the progress we are making on each feature
 * Create your own branches
 * Use retro software to present retros and vote on the most relavant items. 
- E.g. https://www.retrospected.com/game/O71O0P-SI
+ E.g. [https://www.retrospected.com/game/O71O0P-SI](https://app.retrospected.com/game/qCWTmENHb)
 
 ### Stop
 * Procrastinating
