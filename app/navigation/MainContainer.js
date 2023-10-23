@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,14 +14,21 @@ const homeName = "Home";
 const driverName = "Driver";
 const passengerName = "Passenger";
 
+const backgroundColor = "#002E5D";
+const primaryColor = "#FFC72C";
+const accentColor = "#FF4618";
+const textColor = "#FFFFFF";
+
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   return (
+    <SafeAreaView style={{flex: 1, backgroundColor: backgroundColor}}>
     <NavigationContainer independent={true}>
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             let rn = route.name;
@@ -36,15 +44,31 @@ function MainContainer() {
             }
 
             // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return <Ionicons name={iconName} size={size} color={color} style={{ paddingBottom: 30,top: 40 }}/>;
           },
+          tabBarActiveTintColor: "#FFC72C",
+          tabBarInactiveTintColor: textColor,
+          tabBarActiveBackgroundColor: backgroundColor,
+          tabBarInactiveBackgroundColor: backgroundColor,
+          tabBarLabelStyle: {
+            paddingBottom: 15,
+            fontSize: 12,
+            top: 50
+          },
+          tabBarStyle: [
+            {
+              display: "flex",
+              position: 'absolute',
+              height: 30,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: backgroundColor,
+            },
+            null
+          ]
         })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: { padding: 10, height: 70}
-        }}>
+        >
 
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={driverName} component={DriverScreen} />
@@ -52,6 +76,7 @@ function MainContainer() {
 
       </Tab.Navigator>
     </NavigationContainer>
+    </SafeAreaView>
   );
 }
 
