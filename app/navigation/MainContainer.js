@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -23,7 +22,6 @@ const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: backgroundColor}}>
     <NavigationContainer independent={true}>
       <Tab.Navigator
         initialRouteName={homeName}
@@ -44,26 +42,19 @@ function MainContainer() {
             }
 
             // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} style={{ paddingBottom: 30,top: 40 }}/>;
+            return <Ionicons name={iconName} size={size} color={color} />;
           },
           tabBarActiveTintColor: "#FFC72C",
           tabBarInactiveTintColor: textColor,
           tabBarActiveBackgroundColor: backgroundColor,
           tabBarInactiveBackgroundColor: backgroundColor,
           tabBarLabelStyle: {
-            paddingBottom: 15,
-            fontSize: 12,
-            top: 50
+            paddingBottom: 5,
+            fontSize: 12
           },
           tabBarStyle: [
             {
-              display: "flex",
-              position: 'absolute',
-              height: 30,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: backgroundColor,
+              display: "flex"
             },
             null
           ]
@@ -76,7 +67,6 @@ function MainContainer() {
 
       </Tab.Navigator>
     </NavigationContainer>
-    </SafeAreaView>
   );
 }
 
