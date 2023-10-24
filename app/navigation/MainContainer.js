@@ -13,6 +13,11 @@ const homeName = "Home";
 const driverName = "Driver";
 const passengerName = "Passenger";
 
+const backgroundColor = "#002E5D";
+const primaryColor = "#FFC72C";
+const accentColor = "#FF4618";
+const textColor = "#FFFFFF";
+
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
@@ -21,6 +26,7 @@ function MainContainer() {
       <Tab.Navigator
         initialRouteName={homeName}
         screenOptions={({ route }) => ({
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
             let rn = route.name;
@@ -38,13 +44,22 @@ function MainContainer() {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
+          tabBarActiveTintColor: "#FFC72C",
+          tabBarInactiveTintColor: textColor,
+          tabBarActiveBackgroundColor: backgroundColor,
+          tabBarInactiveBackgroundColor: backgroundColor,
+          tabBarLabelStyle: {
+            paddingBottom: 5,
+            fontSize: 12
+          },
+          tabBarStyle: [
+            {
+              display: "flex"
+            },
+            null
+          ]
         })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'grey',
-          labelStyle: { paddingBottom: 10, fontSize: 10 },
-          style: { padding: 10, height: 70}
-        }}>
+        >
 
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={driverName} component={DriverScreen} />
