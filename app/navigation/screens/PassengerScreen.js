@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {CreateButton, IconButton} from 'app/app/button';
 
 export default function PassengerScreen({navigation}) {
     return(
@@ -7,6 +8,10 @@ export default function PassengerScreen({navigation}) {
             <Text
                 onPress ={() => navigation.navigate('Home')}
                 style = {styles.text}>Passenger Screen</Text>
+                <CreateButton text='Create Ride Request' /*onPress={}*//>
+                <CreateButton text='Give rating' /*onPress={}*//>
+                <IconButton text="chatbubble-ellipses-outline" /*onPress={}*//>
+
         </View>
     );
 }

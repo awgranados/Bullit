@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import {CreateButton} from 'app/app/button';
 
 export default function DriverScreen({navigation}) {
     return(
@@ -7,6 +8,7 @@ export default function DriverScreen({navigation}) {
             <Text
                 onPress ={() => navigation.navigate('Home')}
                 style = {styles.text}>Driver Screen</Text>
+                <CreateButton text='Create Ride Offer' /*onPress={}*//>
         </View>
     );
 }
