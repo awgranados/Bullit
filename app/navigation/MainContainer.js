@@ -7,11 +7,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import DriverScreen from './screens/DriverScreen';
 import PassengerScreen from './screens/PassengerScreen';
+import MapScreen from './screens/MapScreen';
 
 //Screen names
 const homeName = "Home";
 const driverName = "Driver";
 const passengerName = "Passenger";
+const mapName = "Map";
 
 const backgroundColor = "#002E5D";
 const primaryColor = "#FFC72C";
@@ -24,7 +26,7 @@ function MainContainer() {
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator
-        initialRouteName={homeName}
+        initialRouteName={mapName}
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
@@ -64,6 +66,7 @@ function MainContainer() {
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={driverName} component={DriverScreen} />
         <Tab.Screen name={passengerName} component={PassengerScreen} />
+        <Tab.Screen name={mapName} component={MapScreen} />
 
       </Tab.Navigator>
     </NavigationContainer>
