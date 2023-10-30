@@ -18,6 +18,8 @@ const primaryColor = "#FFC72C";
 const accentColor = "#FF4618";
 const textColor = "#FFFFFF";
 
+
+
 const Tab = createBottomTabNavigator();
 
 function MainContainer() {
@@ -49,8 +51,10 @@ function MainContainer() {
           tabBarActiveBackgroundColor: backgroundColor,
           tabBarInactiveBackgroundColor: backgroundColor,
           tabBarLabelStyle: {
-            paddingBottom: 5,
-            fontSize: 12
+            paddingTop: insets.top,
+            paddingBottom: insets.bottom,
+            paddingLeft: insets.left,
+            paddingRight: insets.right,
           },
           tabBarStyle: [
             {
