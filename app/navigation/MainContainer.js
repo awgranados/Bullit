@@ -55,10 +55,6 @@ function MainContainer() {
           {
             display: "flex",
           },
-          tabBarStyle: [
-            {
-              display: "flex"
-            },
             null
           ]
         })}
