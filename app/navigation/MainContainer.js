@@ -1,15 +1,14 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import PassengerNavigator from './PassengerPageNavigator';
 import DriverNavigator from './DriverPageNavigator';
 
 // Screens
-import HomeScreen from './screens/HomeScreen';
-import DriverScreen from './screens/DriverScreen';
-import PassengerScreen from './screens/PassengerScreen';
+import HomeScreen from "./screens/HomeScreen";
+import DriverScreen from "./screens/DriverScreen";
+import PassengerScreen from "./screens/PassengerScreen";
 
 //Screen names
 const homeName = "Home";
@@ -25,40 +24,37 @@ const Tab = createBottomTabNavigator();
 
 function MainContainer() {
   return (
-    <NavigationContainer independent={true}>
-      <Tab.Navigator
-        initialRouteName={homeName}
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            let rn = route.name;
+    <Tab.Navigator
+      initialRouteName={homeName}
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          let rn = route.name;
 
-            if (rn === homeName) {
-              iconName = focused ? 'home' : 'home-outline';
+          if (rn === homeName) {
+            iconName = focused ? "home" : "home-outline";
+          } else if (rn === driverName) {
+            iconName = focused ? "car" : "car-outline";
+          } else if (rn === passengerName) {
+            iconName = focused ? "person" : "person-outline";
+          }
 
-            } else if (rn === driverName) {
-              iconName = focused ? 'car' : 'car-outline';
-
-            } else if (rn === passengerName) {
-              iconName = focused ? 'person' : 'person-outline';
-            }
-
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#FFC72C",
+        tabBarInactiveTintColor: textColor,
+        tabBarActiveBackgroundColor: backgroundColor,
+        tabBarInactiveBackgroundColor: backgroundColor,
+        tabBarLabelStyle: {
+          paddingBottom: 5,
+          fontSize: 12,
+        },
+        tabBarStyle: [
+          {
+            display: "flex",
           },
-          tabBarActiveTintColor: "#FFC72C",
-          tabBarInactiveTintColor: textColor,
-          tabBarActiveBackgroundColor: backgroundColor,
-          tabBarInactiveBackgroundColor: backgroundColor,
-          tabBarLabelStyle: {
-            paddingBottom: 5,
-            fontSize: 12
-          },
-          tabBarStyle: [
-            {
-              display: "flex"
-            },
             null
           ]
         })}
@@ -69,7 +65,6 @@ function MainContainer() {
         <Tab.Screen name={passengerName} component={PassengerNavigator} />
 
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }
 
