@@ -59,15 +59,19 @@ export default function Login({ navigation }) {
           outlineColor="#002E5D"
           secureTextEntry
         ></TextInput>
-        <Button
-          style={styles.buttonContainer}
-          mode="contained-tonal"
+        <TouchableOpacity
           onPress={() => navigation.navigate("MainContainer")}
+          style={styles.buttonContainer}
         >
-          <Text style={styles.buttonText}>
+          <Button
+            style={styles.button}
+            mode="contained"
+            buttonColor="#FF4618"
+            labelStyle={styles.buttonText}
+          >
             {signingIn ? "Login" : "Sign Up"}
-          </Text>
-        </Button>
+          </Button>
+        </TouchableOpacity>
 
         <View style={styles.bottom}>
           {signingIn ? (
@@ -103,7 +107,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "80%",
-    backgroundColor: "#FF4618",
+  },
+  button: {
+    width: "100%",
     borderRadius: 8,
     padding: 12,
     marginVertical: 10,
@@ -114,6 +120,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 18,
     fontWeight: "600",
+    width: "100%",
   },
   input: {
     height: 48,
