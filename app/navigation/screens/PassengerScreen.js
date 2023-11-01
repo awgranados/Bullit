@@ -30,6 +30,7 @@ export default function PassengerScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 60,
         flex: 1,
         backgroundColor: "#FFFFFF",
     },
