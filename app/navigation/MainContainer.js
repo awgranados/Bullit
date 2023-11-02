@@ -56,8 +56,8 @@ function MainContainer() {
           tabBarActiveBackgroundColor: backgroundColor,
           tabBarInactiveBackgroundColor: backgroundColor,
           tabBarLabelStyle: {
-            paddingBottom: 5,
-            fontSize: 12
+          paddingBottom: 5,
+          fontSize: 12
           },
           tabBarStyle: [
             {
