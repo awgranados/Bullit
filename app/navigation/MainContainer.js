@@ -7,11 +7,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './screens/HomeScreen';
 import DriverScreen from './screens/DriverScreen';
 import PassengerScreen from './screens/PassengerScreen';
+import ProfileScreen from './screens/ProfileScreen';
+
 
 //Screen names
 const homeName = "Home";
 const driverName = "Driver";
 const passengerName = "Passenger";
+const profileName = "Profile";
 
 const backgroundColor = "#002E5D";
 const primaryColor = "#FFC72C";
@@ -37,7 +40,11 @@ function MainContainer() {
             } else if (rn === driverName) {
               iconName = focused ? 'car' : 'car-outline';
 
-            } else if (rn === passengerName) {
+            } else if (rn === profileName) {
+              iconName = focused ? 'person' : 'person-outline';
+
+            }
+             else if (rn === passengerName) {
               iconName = focused ? 'person' : 'person-outline';
             }
 
@@ -64,6 +71,7 @@ function MainContainer() {
         <Tab.Screen name={homeName} component={HomeScreen} />
         <Tab.Screen name={driverName} component={DriverScreen} />
         <Tab.Screen name={passengerName} component={PassengerScreen} />
+        <Tab.Screen name={profileName} component={ProfileScreen} />
 
       </Tab.Navigator>
     </NavigationContainer>
