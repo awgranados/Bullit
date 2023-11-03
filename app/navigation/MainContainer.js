@@ -61,8 +61,21 @@ function MainContainer() {
         >
 
         <Tab.Screen name={homeName} component={HomeScreen} />
-        <Tab.Screen name={driverName} component={DriverNavigator} />
-        <Tab.Screen name={passengerName} component={PassengerNavigator} />
+        <Tab.Screen name={driverName} component={DriverNavigator} 
+        listeners={({ navigation }) => ({
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+            // Navigate to the DriverPage
+            navigation.navigate(driverName, { screen: 'DriverPage' });
+          },
+        })}/>
+        <Tab.Screen name={passengerName} component={PassengerNavigator} listeners={({ navigation }) => ({
+          tabPress: e => {
+            e.preventDefault();
+            navigation.navigate(passengerName, { screen: 'PassengerPage' });
+          },
+        })}/>
 
       </Tab.Navigator>
   );
