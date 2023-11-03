@@ -8,6 +8,20 @@
       "expo-router"
     ],
     "name": "app",
-    "slug": "app"
+    "slug": "app",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "05e3adcf-d16b-40c6-9092-022e52c33b06"
+      }
+    },
+    "android": {
+      "package": "com.hao_wu.app"
+    },
+    "ios": {
+      "bundleIdentifier": "carpool.app"
+    }
   }
 }
