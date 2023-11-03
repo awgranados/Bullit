@@ -13,6 +13,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import validator from "validator";
 
 export default function Login({ navigation }) {
   const [firstName, setFirstName] = useState("");
@@ -25,22 +26,34 @@ export default function Login({ navigation }) {
   const [segButtonValue, setSegButtonValue] = useState("Authentication Off");
 
   const createUserWithNameEmailAndPassword = async () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log("Account created successfully.");
-        if (user) {
-          user.displayName = firstName + " " + lastName;
-          console.log("Display Name: ", user.displayName);
-          navigation.navigate("MainContainer");
-        }
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert("ERROR: ", errorMessage);
-      });
+    if (firstName.length === 0) {
+      alert("First name is required.");
+    } else if (lastName.length === 0) {
+      alert("Last name is required.");
+    } else if (email.length === 0) {
+      alert("Email is required.");
+    } else if (!validator.isEmail(email)) {
+      alert("Invalid email.");
+    } else if (password.length < 6) {
+      alert("Password must be 6 or more characters long.");
+    } else {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log("Account created successfully.");
+          if (user) {
+            user.displayName = firstName + " " + lastName;
+            console.log("Display Name: ", user.displayName);
+            navigation.navigate("MainContainer");
+          }
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert("ERROR: ", errorMessage);
+        });
+    }
   };
 
   const handleButtonPress = async () => {
