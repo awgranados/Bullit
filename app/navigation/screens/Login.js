@@ -22,7 +22,6 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [signingIn, setSigningIn] = useState(true);
   const [signedIn, setSignedIn] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [segButtonValue, setSegButtonValue] = useState("Authentication Off");
 
   const createUserWithNameEmailAndPassword = async () => {
@@ -51,13 +50,14 @@ export default function Login({ navigation }) {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          alert("ERROR: ", errorMessage);
+          console.log(errorMessage);
+          if (errorMessage == "Firebase: Error (auth/email-already-in-use).")
+            alert("Email already in use.");
         });
     }
   };
 
   const handleButtonPress = async () => {
-    setLoading(true);
     if (segButtonValue == "Authentication On") {
       if (signingIn) {
         signInWithEmailAndPassword(auth, email, password)
@@ -70,7 +70,7 @@ export default function Login({ navigation }) {
           .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            alert("ERROR: ", errorMessage);
+            alert(errorMessage);
           });
       } else {
         createUserWithNameEmailAndPassword();
