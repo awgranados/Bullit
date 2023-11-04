@@ -10,11 +10,13 @@ export default function DriverScreen({navigation}) {
 
     return(
         <View style={styles.container}>
+            <View style={{alignItems:'center'}}>
             <Text
-                onPress ={() => navigation.navigate('Home')}
                 style = {styles.text}>Driver Screen
             </Text>
+            </View>
 
+        <View style={{padding:20, flexDirection:'column', gap:10}}>
             <CreateButton text='Create Ride Offer' onPress ={() => navigation.navigate('CreateRideOffer')}/>
             
             {
@@ -23,7 +25,7 @@ export default function DriverScreen({navigation}) {
                 <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text3} subtitle={`Destination: ${requests.destination}`} subtitleStyle={styles.text3} />
                 <Card.Content>
                     <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
-                    <Text variant="bodyMedium" style={styles.text3}>Desired Fuel price: Regular {requests.fuelPrice} $</Text>
+                    <Text variant="bodyMedium" style={styles.text3}>Desired Fuel price: {requests.fuelPrice} $</Text>
                 </Card.Content>
                 <Card.Actions>
                     <Button onPress ={() => navigation.navigate('Home')} style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
@@ -31,6 +33,7 @@ export default function DriverScreen({navigation}) {
                 </Card>
             ))
             }
+        </View>
         </View>
     );
 }

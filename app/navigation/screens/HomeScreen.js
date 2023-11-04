@@ -11,11 +11,13 @@ export default function HomeScreen({navigation}) {
 
     return(
         <View style={styles.container}>
+            <View style={{alignItems:'center'}}>
             <Text
-                onPress ={() => alert('Home Screen')}
                 style = {styles.text}>Home Screen
             </Text>
+            </View>
 
+            <View style={{padding:20, flexDirection:'column', gap:10}}>
             <Text
                 style = {styles.text2}>Posted Ride Requests
             </Text>
@@ -25,7 +27,7 @@ export default function HomeScreen({navigation}) {
                 <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text3} subtitle={`Destination: ${requests.destination}`} subtitleStyle={styles.text3} />
                 <Card.Content>
                     <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
-                    <Text variant="bodyMedium" style={styles.text3}>Desired Fuel price: Regular {requests.fuelPrice} $</Text>
+                    <Text variant="bodyMedium" style={styles.text3}>Desired Fuel price: {requests.fuelPrice} $</Text>
                 </Card.Content>
                 <Card.Actions>
                     <Button onPress ={() => navigation.navigate('Home')} style={styles.button}><Text style={styles.text3}>Cancel Ride</Text></Button>
@@ -33,7 +35,9 @@ export default function HomeScreen({navigation}) {
                 </Card>
             ))
             }
+        </View>
 
+        <View style={{padding:20, flexDirection:'column', gap:10}}>
             <Text
                 style = {styles.text2}>Posted Rides Offers
             </Text>
@@ -43,7 +47,7 @@ export default function HomeScreen({navigation}) {
                 <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text3} subtitle={`Destination: ${offer.destination}`} subtitleStyle={styles.text3} />
                 <Card.Content>
                     <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
-                    <Text variant="bodyMedium" style={styles.text3}>Fuel price: Regular {offer.fuelPrice} </Text>
+                    <Text variant="bodyMedium" style={styles.text3}>Fuel price: {offer.fuelPrice} $</Text>
                     <Text variant="bodyMedium" style={styles.text3}>Vehicle Model:</Text>
                 </Card.Content>
                 <Card.Actions>
@@ -52,6 +56,7 @@ export default function HomeScreen({navigation}) {
                 </Card>
             ))
             }
+        </View>
         </View>
         
     );
