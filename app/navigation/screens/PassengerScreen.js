@@ -14,6 +14,7 @@ export default function PassengerScreen({navigation}) {
                 onPress ={() => navigation.navigate('Home')}
                 style = {styles.text}>Passenger Screen</Text>
                 <CreateButton text='Create Ride Request' onPress ={() => navigation.navigate('CreateRideRequest')}/>
+                <CreateButton text='Find Ride' onPress ={() => navigation.navigate('FindRide')}/>
 
             {
             rideOffers.map((offer, index) => (
