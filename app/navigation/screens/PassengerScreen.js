@@ -10,11 +10,15 @@ export default function PassengerScreen({navigation}) {
     
     return(
         <View style={styles.container}>
+            <View style={{alignItems:'center'}}>
             <Text
-                onPress ={() => navigation.navigate('Home')}
-                style = {styles.text}>Passenger Screen</Text>
-                <CreateButton text='Create Ride Request' onPress ={() => navigation.navigate('CreateRideRequest')}/>
-                <CreateButton text='Find Ride' onPress ={() => navigation.navigate('FindRide')}/>
+                style = {styles.text}>Passenger Screen
+            </Text>
+            </View>
+
+         <View style={{padding:20, flexDirection:'column', gap:10}}>
+            <CreateButton text='Create Ride Request' onPress ={() => navigation.navigate('CreateRideRequest')}/>
+            <CreateButton text='Find Ride' onPress ={() => navigation.navigate('FindRide')}/>
 
             {
             rideOffers.map((offer, index) => (
@@ -22,7 +26,7 @@ export default function PassengerScreen({navigation}) {
                 <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text3} subtitle={`Destination: ${offer.destination}`} subtitleStyle={styles.text3} />
                 <Card.Content>
                     <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
-                    <Text variant="bodyMedium" style={styles.text3}>Fuel price: Regular {offer.fuelPrice} </Text>
+                    <Text variant="bodyMedium" style={styles.text3}>Fuel price: {offer.fuelPrice} $</Text>
                     <Text variant="bodyMedium" style={styles.text3}>Vehicle Model:</Text>
                 </Card.Content>
                 <Card.Actions>
@@ -31,6 +35,7 @@ export default function PassengerScreen({navigation}) {
                 </Card>
             ))
             }
+        </View>
         </View>
     );
 }
