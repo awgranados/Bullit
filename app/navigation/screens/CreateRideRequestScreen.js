@@ -8,12 +8,13 @@ import RideContext from '../context/RideContext';
 const CreateRideRequestScreen = () => {
     const [dest, setDest] = React.useState("");
     const [desire_fuel_price, setFuelPrice] = React.useState("");
+    const [departure, setDeparture] = React.useState("");
     const navigation = useNavigation();  // Get the navigation prop
 
     const { addRideRequest } = React.useContext(RideContext);
 
     const handleDone = () => {
-      addRideRequest({ destination: dest, fuelPrice: desire_fuel_price });
+      addRideRequest({departure: departure, destination: dest, fuelPrice: desire_fuel_price });
       navigation.navigate('Driver');
     };
 
@@ -27,6 +28,12 @@ const CreateRideRequestScreen = () => {
 
     return (
     <View style={{ padding: 16 }}>
+      <TextInput
+        label="Departure"
+        value={departure}
+        onChangeText={(departure) => setDeparture(departure)}
+        mode="outlined"
+      />
 
       <TextInput
         label="Destination"
@@ -42,6 +49,7 @@ const CreateRideRequestScreen = () => {
           mode='outlined'
       />
 
+      
       <View style={{ marginTop: 20 }}>
         <CreateButton text='Done' onPress={handleDone} />
       </View>

@@ -19,11 +19,11 @@ export default function DriverScreen({navigation}) {
         <View style={{padding:20, flexDirection:'column', gap:10}}>
             <CreateButton text='Create Ride Offer' onPress ={() => navigation.navigate('CreateRideOffer')}/>
             
-            {
-            rideRequests.map((requests, index) => (
+            { rideRequests.map((requests, index) => (
                 <Card key={index} style={styles.card}>
                 <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text3} subtitle={`Destination: ${requests.destination}`} subtitleStyle={styles.text3} />
                 <Card.Content>
+                    <Text variant="titleLarge" style={styles.text3}>Departure: {requests.departure} </Text>
                     <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
                     <Text variant="bodyMedium" style={styles.text3}>Desired Fuel price: {requests.fuelPrice} $</Text>
                 </Card.Content>
@@ -64,3 +64,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#FF4618',
     },
 });
+

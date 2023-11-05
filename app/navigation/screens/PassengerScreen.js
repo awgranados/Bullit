@@ -25,8 +25,9 @@ export default function PassengerScreen({navigation}) {
                 <Card key={index} style={styles.card}>
                 <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text3} subtitle={`Destination: ${offer.destination}`} subtitleStyle={styles.text3} />
                 <Card.Content>
+                    <Text variant="titleLarge" style={styles.text3}>Departure: {offer.departure} </Text>
                     <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
-                    <Text variant="bodyMedium" style={styles.text3}>Fuel price: {offer.fuelPrice} $</Text>
+                    <Text variant="bodyMedium" style={styles.text3}>Fuel price: $ {offer.fuelPrice} </Text>
                     <Text variant="bodyMedium" style={styles.text3}>Vehicle Model:</Text>
                 </Card.Content>
                 <Card.Actions>
