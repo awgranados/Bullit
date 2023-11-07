@@ -7,7 +7,13 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useState } from "react";
-import { TextInput, Text, Button } from "react-native-paper";
+import { TextInput, Text, Button, SegmentedButtons } from "react-native-paper";
+import auth from "../../app/firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import validator from "validator";
 
 export default function Login({ navigation }) {
   const [firstName, setFirstName] = useState("");
@@ -15,10 +21,74 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signingIn, setSigningIn] = useState(true);
+  const [signedIn, setSignedIn] = useState(false);
+  const [segButtonValue, setSegButtonValue] = useState("Authentication Off");
+
+  const createUserWithNameEmailAndPassword = async () => {
+    if (firstName.length === 0) {
+      alert("First name is required.");
+    } else if (lastName.length === 0) {
+      alert("Last name is required.");
+    } else if (email.length === 0) {
+      alert("Email is required.");
+    } else if (!validator.isEmail(email)) {
+      alert("Invalid email.");
+    } else if (password.length < 6) {
+      alert("Password must be 6 or more characters long.");
+    } else {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log("Account created successfully.");
+          if (user) {
+            user.displayName = firstName + " " + lastName;
+            console.log("Display Name: ", user.displayName);
+            navigation.navigate("MainContainer");
+          }
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          if (errorMessage == "Firebase: Error (auth/email-already-in-use).")
+            alert("Email already in use.");
+        });
+    }
+  };
+
+  const handleButtonPress = async () => {
+    if (segButtonValue == "Authentication On") {
+      if (signingIn) {
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log("Signed in successfully.");
+            navigation.navigate("MainContainer");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(errorMessage);
+          });
+      } else {
+        createUserWithNameEmailAndPassword();
+      }
+    } else {
+      navigation.navigate("MainContainer");
+    }
+  };
 
   const handleSigningInClick = () => {
     setSigningIn(!signingIn);
   };
+
+  let buttonLabel;
+  if (segButtonValue == "Authentication Off") buttonLabel = "Continue";
+  else if (signingIn) buttonLabel = "Login";
+  else buttonLabel = "Sign Up";
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -60,7 +130,7 @@ export default function Login({ navigation }) {
           secureTextEntry
         ></TextInput>
         <TouchableOpacity
-          onPress={() => navigation.navigate("MainContainer")}
+          onPress={handleButtonPress}
           style={styles.buttonContainer}
         >
           <Button
@@ -69,7 +139,7 @@ export default function Login({ navigation }) {
             buttonColor="#FF4618"
             labelStyle={styles.buttonText}
           >
-            {signingIn ? "Login" : "Sign Up"}
+            {buttonLabel}
           </Button>
         </TouchableOpacity>
 
@@ -87,6 +157,21 @@ export default function Login({ navigation }) {
             )}
           </TouchableOpacity>
         </View>
+        <SegmentedButtons
+          style={styles.authToggle}
+          value={segButtonValue}
+          onValueChange={setSegButtonValue}
+          buttons={[
+            {
+              value: "Authentication On",
+              label: "Authentication On",
+            },
+            {
+              value: "Authentication Off",
+              label: "Authentication Off",
+            },
+          ]}
+        />
       </ScrollView>
     </TouchableWithoutFeedback>
   );
@@ -111,7 +196,7 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     borderRadius: 8,
-    padding: 12,
+    padding: 8,
     marginVertical: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -137,5 +222,9 @@ const styles = StyleSheet.create({
   },
   bottomMessage: {
     color: "#6a6a6a",
+  },
+  authToggle: {
+    width: "80%",
+    paddingTop: 10,
   },
 });
