@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 
 const RideListScreen = ({ route }) => {
     const { school } = route.params;
-
+    console.log(school)
     return (
         <View>
         <Text>List of Ride Offers</Text>
