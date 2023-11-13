@@ -7,13 +7,13 @@
   - Evauluator:
   - Planned Contributions: 
 
-- Evaluation
+- Design
 
   - Assignee: Stanley Su
   - Evaluator:
   - Planned Contributions: 
   
-- Design
+- Evaluation
 
   - Assignee: Hao Wu
   - Evaluator:
