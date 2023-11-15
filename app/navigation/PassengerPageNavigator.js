@@ -4,6 +4,7 @@ import PassengerScreen from './screens/PassengerScreen';
 import CreateRideRequestScreen from './screens/CreateRideRequestScreen';
 import FindRideScreen from './screens/FindRideScreen';
 import FindRideNavigator from './FindRidePageNavigator';
+import RideListScreen from './screens/RideListScreen';
 
 const PassengerStack = createStackNavigator();
 
@@ -12,7 +13,7 @@ function PassengerNavigator() {
     <PassengerStack.Navigator initialRouteName="PassengerPage">
       <PassengerStack.Screen name="PassengerPage" component={PassengerScreen} options={{ headerShown: false }} />
       <PassengerStack.Screen name="CreateRideRequest" component={CreateRideRequestScreen} />
-      <PassengerStack.Screen name="FindRide" component={FindRideNavigator} />
+      <PassengerStack.Screen name="RideList" component={RideListScreen} />
     </PassengerStack.Navigator>
   );
 }
