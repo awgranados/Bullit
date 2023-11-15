@@ -5,7 +5,8 @@
 * Absent: Stanley Su
 
 ## Experiment
-For experiment, we would hold a coding session to work together to see how that works.
+Currently, we don't think we are working efficiently enough.
+For experiment, we would hold a coding session to work together to promote efficiency to see how that works.
 
 ## Optional
 Here's the team's refelection about things to start/stop/continue:
