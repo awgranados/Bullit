@@ -4,6 +4,9 @@
 * Present: Aditya Patil, Alexander Granados, Ricardo Hinojosa, Hao Wu
 * Absent: Stanley Su
 
+## Experiment
+For experiment, we would hold a coding session to work together to see how that works.
+
 ## Optional
 Here's the team's refelection about things to start/stop/continue:
 ### Start
