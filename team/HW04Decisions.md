@@ -2,6 +2,6 @@
 | -------   | ---------- | ----- | ----- |
 | Hao       | Evaluation | Unit testing | Aditya |
 | Alexander | Documentation |  | Hao |
-| Ricardo   | Implementation |  | Stanley |
+| Ricardo   | Implementation | Firestore DB Impelementation | Stanley |
 | Aditya    | Implementation |  | Alexander |
 | Stanley   | Design |  | Ricardo |
