@@ -14,6 +14,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import validator from "validator";
+import { firestore } from "../../app/firebaseConfig";
+import { collection, onSnapshot, addDoc } from "firebase/firestore";
 
 export default function Login({ navigation }) {
   const [firstName, setFirstName] = useState("");
