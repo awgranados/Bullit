@@ -4,4 +4,4 @@
 | Alexander | Documentation |  | Hao |
 | Ricardo   | Implementation | Firestore DB Implementation | Stanley |
 | Aditya    | Implementation |  | Alexander |
-| Stanley   | Design |  | Ricardo |
+| Stanley   | Design | Improve UI Design of Upcoming Trips | Ricardo |
