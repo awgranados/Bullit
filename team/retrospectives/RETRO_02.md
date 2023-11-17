@@ -8,6 +8,16 @@
 Currently, we don't think we are working efficiently enough.
 For experiment, we would hold a coding session to work together to promote efficiency to see how that works.
 
+### Outcome
+The team met in the library Friday Nov 17th, from 11:00 to 13:00. The team discussed on the project and make it clear what each of the member should be working on.
+- Stanley is working on the UI design
+- Aditya is working on the app icon and modifiying the creating ride offer database
+- Ricardo is working on the login database
+- Hao is working on modifying the inputs for the creating ride offer
+- Alex is working on the user profile page
+
+The meeting went well and we had efficient discussions about our progress to the final product of our app.
+
 ## Optional
 Here's the team's refelection about things to start/stop/continue:
 ### Start
