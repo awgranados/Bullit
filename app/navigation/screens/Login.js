@@ -15,7 +15,7 @@ import {
 } from "firebase/auth";
 import validator from "validator";
 import { firestore } from "../../app/firebaseConfig";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, setDoc, Timestamp, GeoPoint } from "firebase/firestore";
 
 export default function Login({ navigation }) {
   const [firstName, setFirstName] = useState("");
@@ -49,10 +49,11 @@ export default function Login({ navigation }) {
             navigation.navigate("MainContainer");
           }
           setDoc(doc(firestore, "userDetails", user.uid), {
+            accountCreated: Timestamp.now(),
             email: email,
             firstName: firstName,
             lastName: lastName,
-            accountCreated: Timestamp.now(),
+            verifiedDriver: false,
           });
         })
         .catch((error) => {
