@@ -14,8 +14,8 @@ Scrum Master: Alexander Granados
 
 | Name      | Area | Exact topic | Who to review |
 | -------   | ---------- | ----- | ----- |
-| Hao       | Evaluation | Unit testing | Aditya | Launch Animation
+| Hao       | Evaluation | Unit testing | Aditya | 
 | Alexander | Documentation | User Manual | Hao |
 | Ricardo   | Implementation | Firestore DB Implementation | Stanley |
-| Aditya    | Implementation |  | Alexander |
+| Aditya    | Implementation | Launch Animation | Alexander |
 | Stanley   | Design | Improve UI Design of Upcoming Trips | Ricardo |
