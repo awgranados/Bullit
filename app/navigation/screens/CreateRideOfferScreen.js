@@ -93,7 +93,7 @@ const CreateRideOfferScreen = () => {
           style={styles.input}
           onChangeText={fuel_price => setFuelPrice(fuel_price)}
           value={fuel_price}
-          placeholder="Fuel Price"
+          placeholder="Trip cost"
           keyboardType="numeric"
       />
 
