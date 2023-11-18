@@ -10,7 +10,7 @@ Scrum Master: Alexander Granados
 ## Scribed Discussion:
 
 - Discussed what everyone is doing with their assigned topics
-- Decided who to view who's homework 4 outcome
+- Decided who to review who's homework 4 outcome
 
 | Name      | Area | Exact topic | Who to review |
 | -------   | ---------- | ----- | ----- |
