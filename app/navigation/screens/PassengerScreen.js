@@ -15,10 +15,6 @@ export default function PassengerScreen({ navigation }) {
   });
   const { rideOffers } = React.useContext(RideContext);
 
-  function accept(rideOfferID) {
-    acceptRide(rideOfferID);
-  }
-
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
@@ -78,7 +74,10 @@ export default function PassengerScreen({ navigation }) {
               </Text>
             </Card.Content>
             <Card.Actions>
-              <Button onPress={() => accept(offer.id)} style={styles.button}>
+              <Button
+                onPress={() => acceptRide(offer.id)}
+                style={styles.button}
+              >
                 <Text style={styles.text3}>Accept Ride</Text>
               </Button>
             </Card.Actions>

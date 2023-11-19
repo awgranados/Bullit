@@ -24,23 +24,21 @@ export default async function acceptRide(docUID) {
       newSeatsTakenForCalculation = rideOffer.data().seatsTaken + 2;
       newSeatsTaken = rideOffer.data().seatsTaken + 1;
       acceptedSeatPrice = rideOffer.data().seatPrice;
-      updateDoc(doc(firestore, "rideOffers", docUID), {
+      await updateDoc(doc(firestore, "rideOffers", docUID), {
         seatsTaken: newSeatsTaken,
         seatPrice: adjustSeatPrice(totalPrice, newSeatsTakenForCalculation),
         pasengersUserUID: arrayUnion(user.uid),
       });
       updatedRideOffer = await getDoc(doc(firestore, "rideOffers", docUID));
       newSeatPrice = updatedRideOffer.data().seatPrice;
-      addDoc(
-        collection(firestore, "acceptedRidesPassenger", {
-          acceptedOn: Timestamp.now(),
-          pasengerUserUID: user.uid,
-          rideOffer: doc(firestore, "rideOffers/" + docUID),
-          rideCost: acceptedSeatPrice,
-          passengersAmount: newSeatsTaken,
-          newSeatPrice: newSeatPrice,
-        })
-      );
+      await addDoc(collection(firestore, "acceptedPassengerRides"), {
+        acceptedOn: Timestamp.now(),
+        pasengerUserUID: user.uid,
+        rideOffer: doc(firestore, "rideOffers/" + docUID),
+        rideCost: acceptedSeatPrice,
+        passengersAmount: newSeatsTaken,
+        newSeatPrice: newSeatPrice,
+      });
     } catch (error) {
       console.log(error.message);
     }
