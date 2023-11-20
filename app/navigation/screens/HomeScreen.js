@@ -6,8 +6,7 @@ import { Avatar, Button, Card, Accordion, List, Title, Paragraph } from 'react-n
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
-import RideContext from '../context/RideContext';
+import RideContext from "../context/RideContext";
 
 export default function HomeScreen({navigation}) {
     const { rideRequests } = React.useContext(RideContext);
@@ -144,6 +143,7 @@ export default function HomeScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
+
     container: {
         paddingTop: 60,
         flex: 1,
