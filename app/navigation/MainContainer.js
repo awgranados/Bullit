@@ -2,6 +2,7 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import HomeNavigator from "./HomePageNavigator";
 import PassengerNavigator from './PassengerPageNavigator';
 import DriverNavigator from './DriverPageNavigator';
 
@@ -60,7 +61,7 @@ function MainContainer() {
         })}
         >
 
-        <Tab.Screen name={homeName} component={HomeScreen} />
+        <Tab.Screen name={homeName} component={HomeNavigator} />
         <Tab.Screen name={driverName} component={DriverNavigator} 
         listeners={({ navigation }) => ({
           tabPress: e => {
