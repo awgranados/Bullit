@@ -22,6 +22,21 @@ export default function HomeScreen({ navigation }) {
   const { rideOffers } = React.useContext(RideContext);
   const [expandedUpcoming, setExpandedUpcoming] = useState(false);
   const [expandedPosted, setExpandedPosted] = useState(false);
+  const [acceptedPassengerRides, setAcceptedPassengerRides] = React.useState(
+    []
+  );
+  const [acceptedDriverRides, setAcceptedDriverRides] = React.useState([]);
+
+  React.useEffect(() => {
+    const unsubscribe = getAcceptedRidesByUser([
+      setAcceptedPassengerRides,
+      setAcceptedDriverRides,
+    ]);
+
+    // Clean up the listeners when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
   const handleExpandUpcoming = () => {
     setExpandedUpcoming(!expandedUpcoming);
   };
