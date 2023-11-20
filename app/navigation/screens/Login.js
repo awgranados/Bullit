@@ -14,6 +14,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import validator from "validator";
+import { firestore } from "../../app/firebaseConfig";
+import { doc, setDoc, Timestamp, GeoPoint } from "firebase/firestore";
 
 export default function Login({ navigation }) {
   const [firstName, setFirstName] = useState("");
@@ -21,7 +23,6 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signingIn, setSigningIn] = useState(true);
-  const [signedIn, setSignedIn] = useState(false);
   const [segButtonValue, setSegButtonValue] = useState("Authentication Off");
 
   const createUserWithNameEmailAndPassword = async () => {
@@ -46,6 +47,13 @@ export default function Login({ navigation }) {
             console.log("Display Name: ", user.displayName);
             navigation.navigate("MainContainer");
           }
+          setDoc(doc(firestore, "userDetails", user.uid), {
+            accountCreated: Timestamp.now(),
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            verifiedDriver: false,
+          });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -113,7 +121,6 @@ export default function Login({ navigation }) {
             ></TextInput>
           </>
         )}
-
         <TextInput
           style={styles.input}
           label="Email"
@@ -142,7 +149,6 @@ export default function Login({ navigation }) {
             {buttonLabel}
           </Button>
         </TouchableOpacity>
-
         <View style={styles.bottom}>
           {signingIn ? (
             <Text style={styles.bottomMessage}>Don't have an account? </Text>
