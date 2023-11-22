@@ -4,16 +4,18 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import PassengerNavigator from './PassengerPageNavigator';
 import DriverNavigator from './DriverPageNavigator';
-
+import ProfileNavigator from './ProfilePageNavigator'
 // Screens
 import HomeScreen from "./screens/HomeScreen";
 import DriverScreen from "./screens/DriverScreen";
 import PassengerScreen from "./screens/PassengerScreen";
 
+
 //Screen names
 const homeName = "Home";
 const driverName = "Driver";
 const passengerName = "Passenger";
+const profileName = "Profile";
 
 const backgroundColor = "#002E5D";
 const primaryColor = "#FFC72C";
@@ -38,6 +40,8 @@ function MainContainer() {
             iconName = focused ? "car" : "car-outline";
           } else if (rn === passengerName) {
             iconName = focused ? "person" : "person-outline";
+          } else if (rn === profileName) {
+            iconName = focused ? "car" : "car-outline";
           }
 
           // You can return any component that you like here!
@@ -70,6 +74,7 @@ function MainContainer() {
             navigation.navigate(driverName, { screen: 'DriverPage' });
           },
         })}/>
+
         <Tab.Screen name={passengerName} component={PassengerNavigator} listeners={({ navigation }) => ({
           tabPress: e => {
             e.preventDefault();
@@ -77,7 +82,17 @@ function MainContainer() {
           },
         })}/>
 
+      <Tab.Screen name={profileName} component={ProfileNavigator} 
+        listeners={({ navigation }) => ({
+          tabPress: e => {
+            // Prevent default action
+            e.preventDefault();
+            // Navigate to the DriverPage
+            navigation.navigate(profileName, { screen: 'ProfilePage' });
+          },
+        })}/>
       </Tab.Navigator>
+      
   );
 }
 
