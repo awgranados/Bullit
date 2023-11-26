@@ -1,6 +1,17 @@
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../app/firebaseConfig";
 
+/*
+* * * * * Get Accepted Rides From acceptedPassengerRides and  * * * * *
+*                  acceptedDriverRides with User UID
+*   
+*   Grab list of accepted rides as passenger from acceptedPassengerRides
+*   Grab list of accepted rides with at least one seat taken where current user
+*        is the driver
+*   List/s empty if no accepted rides exist 
+* 
+*/
+
 export default async function getAcceptedRidesByUser(callbacks) {
   const user = auth.currentUser;
   const unsubscribes = [];

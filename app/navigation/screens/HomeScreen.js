@@ -16,6 +16,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RideContext from "../context/RideContext";
+import getAcceptedRidesByUser from "../actions/getAcceptedRidesByUser";
 
 export default function HomeScreen({ navigation }) {
   const { rideRequests } = React.useContext(RideContext);
