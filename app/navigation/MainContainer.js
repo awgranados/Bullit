@@ -6,15 +6,10 @@ import HomeNavigator from "./HomePageNavigator";
 import PassengerNavigator from './PassengerPageNavigator';
 import DriverNavigator from './DriverPageNavigator';
 
-// Screens
-import HomeScreen from "./screens/HomeScreen";
-import DriverScreen from "./screens/DriverScreen";
-import PassengerScreen from "./screens/PassengerScreen";
-
 //Screen names
 const homeName = "Home";
-const driverName = "Driver";
-const passengerName = "Passenger";
+const driverName = "Rides";
+const passengerName = "Profile";
 
 const backgroundColor = "#002E5D";
 const primaryColor = "#FFC72C";
