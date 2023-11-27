@@ -6,17 +6,12 @@ const RideContext = createContext(null);
 
 export const RideProvider = ({ children }) => {
   const [rideOffers, setRideOffers] = useState([]);
-  const [rideRequests, setRideRequests] = useState([]);
 
   // Function to add a ride offer to Firestore
   const addRideOffer = async (offer) => {
     await addDoc(collection(firestore, 'rideOffers'), offer);
   };
 
-  // Function to add a ride request to Firestore
-  const addRideRequest = async (request) => {
-    await addDoc(collection(firestore, 'rideRequests'), request);
-  };
 
   // Fetch ride offers from Firestore
   useEffect(() => {
@@ -30,22 +25,9 @@ export const RideProvider = ({ children }) => {
   
     return () => unsubscribe();
   }, []);
-  
-  // Fetch ride requests from Firestore
-  useEffect(() => {
-    const unsubscribe = onSnapshot(collection(firestore, 'rideRequests'), (snapshot) => {
-      const newRequests = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setRideRequests(newRequests);
-    });
-  
-    return () => unsubscribe();
-  }, []);
 
   return (
-    <RideContext.Provider value={{ rideOffers, rideRequests, addRideOffer, addRideRequest }}>
+    <RideContext.Provider value={{ rideOffers, addRideOffer}}>
       {children}
     </RideContext.Provider>
   );
