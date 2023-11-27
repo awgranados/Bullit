@@ -49,3 +49,10 @@ When a user accepts a ride as a passenger the acceptRide function will:
 <img src="https://github.com/ucsb-cs184-f23/pj-react-02/assets/42366976/76a9daa8-a793-4f19-9e3f-f11a8095dd29" width="800">
 
 ## PR https://github.com/ucsb-cs184-f23/pj-react-02/pull/48 Retrieve Accepted Rides
+
+The getAcceptedRidesByUser function will retrieve the accepted passenger and driver rides by user UID. It provides a live snapshot
+of the docs and updates the lists as it detects changes to the queried documents.
+
+1. Get accepted passenger rides from "acceptedPassengerRides" Firestore collection
+2. Get accepted driver rides from "acceptedDriverRides" Firestore collection
+3. Updates list/s using callback functions to set the lists to the retrieved data (empty list/s if it/they don't exist)
