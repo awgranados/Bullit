@@ -5,6 +5,7 @@ import RideContext from '../context/RideContext';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
 
 import { Avatar, Button, Card } from 'react-native-paper';
+import acceptRide from '../actions/acceptRide';
 
 export default function DriverScreen({navigation}) {
     const [ region, setRegion ] = React.useState({
@@ -61,7 +62,7 @@ export default function DriverScreen({navigation}) {
                         <Text variant="bodyMedium" style={styles.text3}>Desired Fuel price: {offers.fuelPrice} $</Text>
                     </Card.Content>
                     <Card.Actions>
-                        <Button onPress ={() => navigation.navigate('Home')} style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
+                        <Button onPress ={() => acceptRide(offers.id)} style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
                     </Card.Actions>
                     </Card>
                 ))
