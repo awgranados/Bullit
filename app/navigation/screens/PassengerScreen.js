@@ -16,28 +16,28 @@ export default function PassengerScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        paddingTop: 60,
-        flex: 1,
-        backgroundColor: "#FFFFFF",
-    },
-    text: {
-        fontSize: 26,
-        fontWeight: 'bold',
-        color: "#002E5D",
-    },
-    card: {
-        backgroundColor: '#002E5D',
-    },
-    text2: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: "#002E5D",
-    },
-    text3: {
-        color: "#FFFFFF",
-    },
-    button: {
-        backgroundColor: '#FF4618',
-    },
+  container: {
+    paddingTop: 60,
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+  text: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#002E5D",
+  },
+  card: {
+    backgroundColor: "#002E5D",
+  },
+  text2: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#002E5D",
+  },
+  text3: {
+    color: "#FFFFFF",
+  },
+  button: {
+    backgroundColor: "#FF4618",
+  },
 });
