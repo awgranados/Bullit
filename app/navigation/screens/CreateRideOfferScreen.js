@@ -48,7 +48,7 @@ const CreateRideOfferScreen = () => {
           fetchDetails={true}
           onPress={(data, details = null) => {
               // Set departure to "University of California, Santa Barbara" if it matches
-              if (data.description === "University of California, Santa Barbara") {
+              if (data.description === UCSB) {
                   setDeparture(data.description);
               }
           }}
