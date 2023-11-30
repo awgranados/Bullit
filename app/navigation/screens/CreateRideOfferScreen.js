@@ -1,14 +1,19 @@
+// CreateRideOfferScreen.js
 import { View, Text, Button, StyleSheet, TextInput, Alert } from 'react-native'
 import * as React from 'react';
 import { useNavigation } from '@react-navigation/native'; 
 import { CreateButton } from 'app/app/button';
 import RideContext from '../context/RideContext';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const CreateRideOfferScreen = () => {
     const [dest, setDest] = React.useState("");
     const [fuel_price, setFuelPrice] = React.useState("");
     const [departure, setDeparture] = React.useState("");
+    const [departureDate, setDepartureDate] = React.useState(new Date());
+    const [showDatePicker, setShowDatePicker] = React.useState(false);
+    const [seats, setSeats] = React.useState(4);
 
     const navigation = useNavigation();
 
@@ -30,6 +35,15 @@ const CreateRideOfferScreen = () => {
 
       addRideOffer({ departure: departure, destination: dest, fuelPrice: fuel_price });
       navigation.navigate('DriverPage'); 
+    };
+    
+    const onDateChange = (event, selectedDate) => {
+      const currentDate = selectedDate || departureDate;
+      setShowDatePicker(true);
+    };
+
+    const showDatepicker = () => {
+      setShowDatePicker(true);
     };
 
     React.useLayoutEffect(() => {
@@ -91,6 +105,29 @@ const CreateRideOfferScreen = () => {
           textInput: styles.input // Apply the same style as your TextInput
         }}
       />
+      <Button onPress={showDatepicker} title="Choose Departure Date and Time" />
+        {showDatePicker && (
+          <DateTimePicker
+              testID="dateTimePicker"
+              value={departureDate}
+              mode={'datetime'}
+              is24Hour={true}
+              display="default"
+              onChange={onDateChange}
+              alignSelf='center'
+          />
+        )}
+
+      <Text style={styles.label}>Seats Available</Text>
+        <TextInput
+            style={styles.input}
+            onChangeText={text => setSeats(text)}
+            value={seats}
+            placeholder="Enter the number of seats"
+            keyboardType="numeric"
+        />
+
+              
 
       <Text style={styles.label}>Trip Cost</Text>
       <TextInput
@@ -113,6 +150,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     color: '#000',
+    textAlign: 'left', 
   },
   input: {
     height: 50, // Set the height to match Google Places Autocomplete
@@ -124,8 +162,15 @@ const styles = StyleSheet.create({
     fontSize: 16, // Font size
     color: '#424242', // Text color
     backgroundColor: '#ffffff',
+    textAlign: 'left',
   },
-  // ... other styles
+  datePickerContainer: {
+    alignSelf: 'flex-start',
+    marginLeft: 0,
+  },
+  button: {
+    textAlign: 'left', // Align text to the left
+  },
 });
 
 export default CreateRideOfferScreen
