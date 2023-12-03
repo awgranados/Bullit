@@ -122,7 +122,7 @@ const CreateRideOfferScreen = () => {
         <TextInput
             style={styles.input}
             onChangeText={text => setSeats(text)}
-            value={seats}
+            value={seats.toString()}
             placeholder="Enter the number of seats"
             keyboardType="numeric"
         />
