@@ -53,6 +53,7 @@ export default async function acceptRide(docUID) {
       newSeatPrice = updatedRideOffer.data().seatPrice;
       await addDoc(collection(firestore, "acceptedPassengerRides"), {
         acceptedOn: Timestamp.now(),
+        departureDate: rideOffer.data().departureDate,
         pasengerUserUID: user.uid,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
         rideCost: acceptedSeatPrice,
@@ -73,6 +74,7 @@ export default async function acceptRide(docUID) {
      if (newSeatsTaken == 1) {
       await addDoc(collection(firestore, "acceptedDriverRides"), {
         firstAcceptedOn: Timestamp.now(),
+        departureDate: updatedRideOffer.data().departureDate,
         driverUserUID: updatedRideOffer.data().driverUserUID,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
         passengersAmount: newSeatsTaken,
