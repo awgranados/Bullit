@@ -17,6 +17,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RideContext from "../context/RideContext";
 import getAcceptedRidesByUser from "../actions/getAcceptedRidesByUser";
+import getRideOffersByDriver from "../actions/getRideOffersByDriver";
 
 export default function HomeScreen({ navigation }) {
   const { rideRequests } = React.useContext(RideContext);
@@ -27,6 +28,14 @@ export default function HomeScreen({ navigation }) {
     []
   );
   const [acceptedDriverRides, setAcceptedDriverRides] = React.useState([]);
+  const [postedRideOffers, setPostedRideOffers] = React.useState([])
+
+  React.useEffect(() => {
+    // Pass the setter function to the fetch function
+    const unsubscribe = getRideOffersByDriver(setPostedRideOffers);
+    // Cleanup function to unsubscribe when the component unmounts
+    return () => unsubscribe();
+  }, []);
 
   React.useEffect(() => {
     const unsubscribe = getAcceptedRidesByUser([
