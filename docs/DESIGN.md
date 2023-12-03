@@ -3,6 +3,7 @@ Design Document
 
 Overview System Architecture Diagram
 ---------------
+![image](https://github.com/ucsb-cs184-f23/pj-react-02/assets/57011302/2df4f031-a2cc-4e7d-8c9a-c29451c04f37)
 
 Important Team Decisions
 ---------------
