@@ -1,5 +1,6 @@
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { firestore } from "../../app/firebaseConfig";
+import auth from "../../app/firebaseConfig";
 
 /*
 * * * * * Get Accepted Rides From acceptedPassengerRides and  * * * * *

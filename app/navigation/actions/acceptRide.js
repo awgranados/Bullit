@@ -35,7 +35,7 @@ export default async function acceptRide(docUID) {
       await updateDoc(doc(firestore, "rideOffers", docUID), {
         seatsTaken: newSeatsTaken,
         seatPrice: adjustSeatPrice(totalPrice, newSeatsTakenForCalculation),
-        pasengersUserUID: arrayUnion(user.uid),
+        passengersUserUID: arrayUnion(user.uid),
       });
 
       /*
@@ -53,7 +53,7 @@ export default async function acceptRide(docUID) {
       newSeatPrice = updatedRideOffer.data().seatPrice;
       await addDoc(collection(firestore, "acceptedPassengerRides"), {
         acceptedOn: Timestamp.now(),
-        pasengerUserUID: user.uid,
+        passengerUserUID: user.uid,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
         rideCost: acceptedSeatPrice,
         passengersAmount: newSeatsTaken,

@@ -6,6 +6,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 
 import { Avatar, Button, Card } from 'react-native-paper';
 import acceptRide from '../actions/acceptRide';
+import auth from "../../app/firebaseConfig";
 
 export default function DriverScreen({navigation}) {
     const [ region, setRegion ] = React.useState({
@@ -15,6 +16,7 @@ export default function DriverScreen({navigation}) {
         longitudeDelta: 0.0421
       })
     const { rideOffers } = React.useContext(RideContext);
+    const user = auth.currentUser;
 
     return(
         <View style={styles.container}>
@@ -53,20 +55,43 @@ export default function DriverScreen({navigation}) {
                 }}
                 />
 
-                { rideOffers.map((offers, index) => (
-                    <Card key={index} style={styles.card}>
+                {rideOffers.map((offers, index) => {
+                const departureDate = offers.departureTime.toDate();
+                const passengersUserUID = offers.passengersUserUID;
+                let showOffer = true;
+                    
+                if (passengersUserUID){
+                    for (const passenger of passengersUserUID) {
+                        if (user.uid === passenger) showOffer = false;
+                    }
+                }
+
+                const options = {
+                    weekday: 'long',
+                    month: 'short',
+                    day: 'numeric',
+                };
+
+                const formattedDate = departureDate.toLocaleDateString('en-US', options);
+
+                return (
+                    showOffer && 
+                    (<Card key={index} style={styles.card}>
                     <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text3} subtitle={`Destination: ${offers.destination}`} subtitleStyle={styles.text3} />
                     <Card.Content>
+                        <Text variant="titleLarge" style={styles.text3}>
+                        {formattedDate}
+                        </Text>
                         <Text variant="titleLarge" style={styles.text3}>Departure: {offers.departure} </Text>
-                        <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
-                        <Text variant="bodyMedium" style={styles.text3}>Desired Fuel price: {offers.fuelPrice} $</Text>
+                        <Text variant="titleLarge" style={styles.text3}>Seats Taken: {offers.seatsTaken} / {offers.seatsAvailable}</Text>
+                        <Text variant="bodyMedium" style={styles.text3}>Seat Price: ${offers.seatPrice}</Text>
                     </Card.Content>
                     <Card.Actions>
-                        <Button onPress ={() => acceptRide(offers.id)} style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
+                        <Button onPress={() => acceptRide(offers.id)} style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
                     </Card.Actions>
-                    </Card>
-                ))
-                }
+                    </Card>)
+                );
+                })}
             </View>
         </View>
     );

@@ -6,11 +6,15 @@ import { CreateButton } from 'app/app/button';
 import RideContext from '../context/RideContext';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { getTripDuration } from '../actions/getTripDuration';
+import { Timestamp } from "firebase/firestore";
 
 const CreateRideOfferScreen = () => {
     const [dest, setDest] = React.useState("");
     const [fuel_price, setFuelPrice] = React.useState("");
     const [departure, setDeparture] = React.useState("");
+    const [destCoord, setDestCoord] = React.useState();
+    const [departureCoord, setDepartureCoord] = React.useState([34.4133, -119.8610]);
     const [departureDate, setDepartureDate] = React.useState(new Date());
     const [showDatePicker, setShowDatePicker] = React.useState(false);
     const [seats, setSeats] = React.useState(4);
@@ -21,7 +25,7 @@ const CreateRideOfferScreen = () => {
     
     const UCSB = "University of California, Santa Barbara, Santa Barbara, CA, USA";
 
-    const handleDone = () => {
+    const handleDone = async () => {
       const fuelPriceNum = parseFloat(fuel_price);
       if (isNaN(fuelPriceNum) || fuelPriceNum < 0 || fuelPriceNum > 1000) {
           Alert.alert("Invalid Input", "Please enter a fuel price between 0.00 and 1000.00");
@@ -33,12 +37,41 @@ const CreateRideOfferScreen = () => {
         return; // Return early to prevent further execution
       }
 
-      addRideOffer({ departure: departure, destination: dest, fuelPrice: fuel_price });
+      let arrivalTime = new Date()
+
+      try{
+        console.log("Inside try block");
+        console.log("Departure Coordinates: ", departureCoord);
+        console.log("Destination Coordinates: ", destCoord);
+        const tripDuration = await getTripDuration(departureCoord, destCoord);
+        console.log("trip duration: ", tripDuration)
+        //Calculate Arrival Time
+        arrivalTime = new Date(departureDate.getTime() + tripDuration * 1000)
+        console.log("arrival time: ", arrivalTime)
+      } catch(error){
+        console.error("Error in try", error)
+      }
+
+
+      addRideOffer({ 
+        createdOn: Timestamp.now(),
+        departureCoord: departureCoord,
+        departure: departure,
+        departureTime: Timestamp.fromDate(departureDate),
+        destinationCoord: destCoord,
+        destination: dest,
+        arrivalTime: Timestamp.fromDate(arrivalTime),
+        totalPrice: fuel_price,
+        seatsAvailable: seats,
+        seatsTaken: 0,
+        seatPrice: fuel_price
+       });
       navigation.navigate('DriverPage'); 
     };
     
     const onDateChange = (event, selectedDate) => {
       const currentDate = selectedDate || departureDate;
+      setDepartureDate(currentDate);
       setShowDatePicker(true);
     };
 
@@ -92,6 +125,7 @@ const CreateRideOfferScreen = () => {
         fetchDetails={true}
         onPress={(data, details = null) => {
           setDest(data.description);
+          setDestCoord([details.geometry.location.lat, details.geometry.location.lng])
         }}
         query={{
           key: 'AIzaSyD5s29CI_yIZQyR2TsfucfAtVpZCLMINcs',
