@@ -35,7 +35,7 @@ export default async function acceptRide(docUID) {
       await updateDoc(doc(firestore, "rideOffers", docUID), {
         seatsTaken: newSeatsTaken,
         seatPrice: adjustSeatPrice(totalPrice, newSeatsTakenForCalculation),
-        pasengersUserUID: arrayUnion(user.uid),
+        passengersUserUID: arrayUnion(user.uid),
       });
 
       /*
@@ -53,11 +53,15 @@ export default async function acceptRide(docUID) {
       newSeatPrice = updatedRideOffer.data().seatPrice;
       await addDoc(collection(firestore, "acceptedPassengerRides"), {
         acceptedOn: Timestamp.now(),
-        departureDate: rideOffer.data().departureDate,
-        pasengerUserUID: user.uid,
+        departureTime: rideOffer.data().departureTime,
+        departure: rideOffer.data().departure,
+        destination: rideOffer.data().destination,
+        arrivalTime: rideOffer.data().arrivalTime,
+        seatsAvailable: rideOffer.data().seatsAvailable,
+        seatsTaken: newSeatsTaken,
+        passengerUserUID: user.uid,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
         rideCost: acceptedSeatPrice,
-        passengersAmount: newSeatsTaken,
         newSeatPrice: newSeatPrice,
       });
 
@@ -74,11 +78,15 @@ export default async function acceptRide(docUID) {
      if (newSeatsTaken == 1) {
       await addDoc(collection(firestore, "acceptedDriverRides"), {
         firstAcceptedOn: Timestamp.now(),
-        departureDate: updatedRideOffer.data().departureDate,
+        departureTime: rideOffer.data().departureTime,
+        departure: rideOffer.data().departure,
+        destination: rideOffer.data().destination,
+        arrivalTime: rideOffer.data().arrivalTime,
+        seatsAvailable: rideOffer.data().seatsAvailable,
+        seatsTaken: newSeatsTaken,
         driverUserUID: updatedRideOffer.data().driverUserUID,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
-        passengersAmount: newSeatsTaken,
-        passengersUserUID: updatedRideOffer.data().pasengersUserUID,
+        passengersUserUID: updatedRideOffer.data().passengersUserUID,
       });
     }
 

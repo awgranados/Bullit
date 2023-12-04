@@ -34,10 +34,13 @@ export default async function getAcceptedRidesByUser(callbacks) {
 
       const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
         const documents = [];
+        let isDriver = false;
+        if (collectionName === "acceptedDriverRides") isDriver = true;
 
         querySnapshot.forEach((doc) => {
           documents.push({
             id: doc.id,
+            isDriver: isDriver,
             ...doc.data(),
           });
         });
