@@ -14,6 +14,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import RideContext from "../context/RideContext";
 import getAcceptedRidesByUser from "../actions/getAcceptedRidesByUser";
 import getRideOffersByDriver from "../actions/getRideOffersByDriver";
+import { getRideOfferByReference } from "../actions/getRideOfferByRefrence";
 
 export default function HomeScreen({ navigation }) {
   const { rideOffers } = React.useContext(RideContext);
@@ -69,7 +70,11 @@ export default function HomeScreen({ navigation }) {
   };
   const isDriver = true;
 
-  const openDetailScreen = (rideDetails) => {
+  const openDetailScreen = async (rideDetails, title) => {
+    //fetch ride offer of accepted ride using reference
+    if (title === "Upcoming Trips")
+    rideDetails = await getRideOfferByReference(rideDetails.rideOffer)
+
     navigation.navigate("RideDetail", { rideDetails });
   };
 
@@ -97,13 +102,13 @@ export default function HomeScreen({ navigation }) {
                 const departureTime = departureDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
                 const arrivalDate = offer.arrivalTime.toDate();
                 const arrivalTime = arrivalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                const sectionTitle = "Upcoming Trips"
                 return(
                 <TouchableRipple
                   key={index}
-                  onPress={() => openDetailScreen(offer)}
+                  onPress={() => openDetailScreen(offer, sectionTitle)}
                 >
                   <Card key={index} style={styles.card}>
-                    {/* <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text4} subtitle={`Destination: ${offer.destination}`} subtitleStyle={styles.text3} /> */}
                     <Card.Content
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
@@ -233,11 +238,12 @@ export default function HomeScreen({ navigation }) {
                 const departureTime = departureDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
                 const arrivalDate = offer.arrivalTime.toDate();
                 const arrivalTime = arrivalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-                
+                const sectionTitle = "Your Ride Offers"
+
                 return (
                 <TouchableRipple
                   key={index}
-                  onPress={() => openDetailScreen(offer)}
+                  onPress={() => openDetailScreen(offer, sectionTitle)}
                 >
                   <Card key={index} style={styles.card}>
                     <Card.Content

@@ -1,16 +1,40 @@
 import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import * as React from 'react';
-import { List, MD3Colors, TextInput, Card, Title, Paragraph, Avatar } from 'react-native-paper';
+import { Card, Title, Paragraph, Avatar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native'; 
-import { CreateButton } from 'app/app/button';
 import Entypo from "react-native-vector-icons/Entypo";
+import { getTripDistance } from '../actions/getTripDistance';
 
 const RideDetailScreen = ({ route }) => {
+    const [tripDistance, setTripDistance] = React.useState(0);
     const { rideDetails } = route.params;
     {/* SUBSTITUTE */}
     const cancelRide = () => {
         console.log('here');
     };
+
+    React.useEffect(() => {
+        const fetchTripDistance = async () => {
+            //retrieve trip distance 
+            let newTripDistance = await getTripDistance(rideDetails.departureCoord, rideDetails.destinationCoord);
+            setTripDistance(Number(newTripDistance.toFixed(1)));
+        }
+        fetchTripDistance();
+    }, [])
+
+    const departureDate = rideDetails.departureTime.toDate();
+    const departureTime = departureDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).slice(0, -3);
+    const departureTimeAMPM = departureDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).slice(-2);
+    const arrivalDate = rideDetails.arrivalTime.toDate();
+    const arrivalTime = arrivalDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).slice(0, -3);
+    const arrivalTimeAMPM = arrivalDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).slice(-2);
+    // Calculate the time difference in milliseconds
+    const timeDifferenceInMillis = arrivalDate - departureDate;
+
+    // Convert milliseconds to hours and minutes
+    const hours = Math.floor(timeDifferenceInMillis / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifferenceInMillis % (1000 * 60 * 60)) / (1000 * 60));
+
 
     return (
         <ScrollView>
@@ -19,25 +43,25 @@ const RideDetailScreen = ({ route }) => {
                     <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Route Info</Text>
                 </View>
                 <Card style={styles.card}>
-                    <Card.Content style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Card.Content style={{flexDirection: 'row', alignItems: 'center' }}>
                         <View style={{marginRight: 16}}>
                             {/* SUBSTITUTE */}
-                            <Title style={{textAlign: 'left', fontSize: 30, fontWeight: 'bold', color:"white"}}>{"10:00"}</Title>
+                            <Title style={{textAlign: 'left', fontSize: 30, fontWeight: 'bold', color:"white"}}>{departureTime}</Title>
                             {/* SUBSTITUTE */}
-                            <Paragraph  style={{ textAlign: 'left', fontSize: 20, color:"white" }}>{"AM"}</Paragraph>
+                            <Paragraph  style={{ textAlign: 'left', fontSize: 20, color:"white" }}>{departureTimeAMPM}</Paragraph>
                             {/* SUBSTITUTE */}
                             <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"UCSB"}</Paragraph>
                         </View>
-                        <View>
-                            <Entypo name={"flow-line"} size={100} color={"white"} style={{ transform: [{ rotate: '90deg' }], marginTop: -40 }} />
-                            <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white", marginTop: -30 }}>{"6H 00M"}</Paragraph>
-                            <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white" }}>{"330 mi"}</Paragraph>
+                        <View style={{marginLeft: 24}}>
+                            <Entypo name={"flow-line"} size={90} color={"white"} style={{ transform: [{ rotate: '90deg' }], marginTop: -32}} />
+                            <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white", marginTop: -26 }}>{hours + "H " + minutes + " M"}</Paragraph>
+                            <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white" }}>{tripDistance + " mi"}</Paragraph>
                         </View>
                         <View style={{ marginLeft: 'auto' }}>
                             {/* SUBSTITUTE */}
-                            <Title style={{textAlign: 'right', fontSize: 30, fontWeight: 'bold', color:"white"}}>{"5:00"}</Title>
+                            <Title style={{textAlign: 'right', fontSize: 30, fontWeight: 'bold', color:"white",}}>{arrivalTime}</Title>
                             {/* SUBSTITUTE */}
-                            <Paragraph  style={{ textAlign: 'right', fontSize: 20, color:"white" }}>{"PM"}</Paragraph>
+                            <Paragraph  style={{ textAlign: 'right', fontSize: 20, color:"white" }}>{arrivalTimeAMPM}</Paragraph>
                             <Paragraph  style={{ textAlign: 'right', fontSize: 15, color:"white" }}>{rideDetails.destination && rideDetails.destination.split(',')[0]}</Paragraph>
                         </View>
                     </Card.Content>
@@ -117,10 +141,10 @@ const styles = StyleSheet.create({
     card: {
         backgroundColor: '#002E5D',
         width: 350,
-        marginHorizontal: 30,
+        marginHorizontal: 36,
         padding: 10,
         borderRadius: 10,
-    },
+        },
     card2: {
         backgroundColor: '#FFFFFF',
         width: 300,
