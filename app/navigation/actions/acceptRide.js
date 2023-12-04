@@ -53,10 +53,15 @@ export default async function acceptRide(docUID) {
       newSeatPrice = updatedRideOffer.data().seatPrice;
       await addDoc(collection(firestore, "acceptedPassengerRides"), {
         acceptedOn: Timestamp.now(),
+        departureTime: rideOffer.data().departureTime,
+        departure: rideOffer.data().departure,
+        destination: rideOffer.data().destination,
+        arrivalTime: rideOffer.data().arrivalTime,
+        seatsAvailable: rideOffer.data().seatsAvailable,
+        seatsTaken: newSeatsTaken,
         passengerUserUID: user.uid,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
         rideCost: acceptedSeatPrice,
-        passengersAmount: newSeatsTaken,
         newSeatPrice: newSeatPrice,
       });
 
@@ -73,10 +78,15 @@ export default async function acceptRide(docUID) {
      if (newSeatsTaken == 1) {
       await addDoc(collection(firestore, "acceptedDriverRides"), {
         firstAcceptedOn: Timestamp.now(),
+        departureTime: rideOffer.data().departureTime,
+        departure: rideOffer.data().departure,
+        destination: rideOffer.data().destination,
+        arrivalTime: rideOffer.data().arrivalTime,
+        seatsAvailable: rideOffer.data().seatsAvailable,
+        seatsTaken: newSeatsTaken,
         driverUserUID: updatedRideOffer.data().driverUserUID,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
-        passengersAmount: newSeatsTaken,
-        passengersUserUID: updatedRideOffer.data().pasengersUserUID,
+        passengersUserUID: updatedRideOffer.data().passengersUserUID,
       });
     }
 
