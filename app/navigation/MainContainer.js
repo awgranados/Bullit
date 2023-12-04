@@ -10,6 +10,7 @@ import DriverNavigator from './DriverPageNavigator';
 const homeName = "Home";
 const driverName = "Rides";
 const passengerName = "Profile";
+const splashName = "Splash";
 
 const backgroundColor = "#002E5D";
 const primaryColor = "#FFC72C";
