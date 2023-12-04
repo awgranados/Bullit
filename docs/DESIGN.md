@@ -16,3 +16,8 @@ Important Team Decisions
 
 User Experience Considerations
 ---------------
+1. Create animated logo to make app feel more professional
+2. Use UCSB colors to appeal to the users who are UCSB students
+3. Use cards within collapsible list to display ride's most relavant information while clicking on card would take user to new page for more details
+4. Provide driver details for respective ride to give riders safety reassurance
+5. Use of icons in cards and navbar to limit amount of words used so app is more aesthetic and intuitive 
