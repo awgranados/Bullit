@@ -1,12 +1,8 @@
 import * as React from "react";
 import { useState } from "react";
-import LoginButton from "app/app/button";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import {
-  Avatar,
-  Button,
   Card,
-  Accordion,
   List,
   Title,
   Paragraph,
@@ -17,26 +13,53 @@ import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import RideContext from "../context/RideContext";
 import getAcceptedRidesByUser from "../actions/getAcceptedRidesByUser";
+import getRideOffersByDriver from "../actions/getRideOffersByDriver";
 
 export default function HomeScreen({ navigation }) {
-  const { rideRequests } = React.useContext(RideContext);
   const { rideOffers } = React.useContext(RideContext);
-  const [expandedUpcoming, setExpandedUpcoming] = useState(false);
+  const [expandedUpcoming, setExpandedUpcoming] = useState(true);
   const [expandedPosted, setExpandedPosted] = useState(false);
   const [acceptedPassengerRides, setAcceptedPassengerRides] = React.useState(
     []
   );
   const [acceptedDriverRides, setAcceptedDriverRides] = React.useState([]);
+  const [acceptedRides, setAcceptedRides] = React.useState([]);
+  const [postedRideOffers, setPostedRideOffers] = React.useState([])
 
+  
   React.useEffect(() => {
     const unsubscribe = getAcceptedRidesByUser([
       setAcceptedPassengerRides,
       setAcceptedDriverRides,
     ]);
-
+    
     // Clean up the listeners when the component unmounts
     return () => unsubscribe();
   }, []);
+
+  React.useEffect(() => {
+    try {
+      const unsubscribe = getRideOffersByDriver(setPostedRideOffers);
+      return () => unsubscribe();
+    } catch (error) {
+      console.error("Error fetching ride offers:", error);
+    }
+  }, []);
+  
+  React.useEffect(() => {
+    //Combine lists of accepted rides
+    const mergedAcceptedRides = [...acceptedPassengerRides, ...acceptedDriverRides];
+    if (mergedAcceptedRides && mergedAcceptedRides.length > 0) {
+      //sort by nearest departureTime
+      mergedAcceptedRides.sort((a, b) => {
+        const timeA = a.departureTime.toDate();
+        const timeB = b.departureTime.toDate();
+      
+        return timeA - timeB;
+        });
+        setAcceptedRides(mergedAcceptedRides);
+      }
+  }, [acceptedDriverRides, acceptedPassengerRides])
 
   const handleExpandUpcoming = () => {
     setExpandedUpcoming(!expandedUpcoming);
@@ -62,11 +85,19 @@ export default function HomeScreen({ navigation }) {
           <List.Accordion
             expanded={expandedUpcoming}
             onPress={handleExpandUpcoming}
-            style={{ marginTop: 10 }}
+            style={{ marginTop: 10, paddingLeft: 23 }}
             title="Upcoming Trips"
+            titleStyle= {{ fontSize: 17, fontWeight: 500 }}
           >
             <View style={{ marginTop: 10, alignItems: "center" }}>
-              {rideOffers.map((offer, index) => (
+              {acceptedRides.map((offer, index) => {
+                const departureDate = offer.departureTime.toDate();
+                const departureDay = departureDate.getDate();
+                const departureMonth = departureDate.toLocaleString('en-us', { month: 'short' });
+                const departureTime = departureDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                const arrivalDate = offer.arrivalTime.toDate();
+                const arrivalTime = arrivalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                return(
                 <TouchableRipple
                   key={index}
                   onPress={() => openDetailScreen(offer)}
@@ -79,39 +110,42 @@ export default function HomeScreen({ navigation }) {
                       <View style={{ marginRight: 16 }}>
                         <Title
                           style={{
-                            fontSize: 30,
+                            textAlign: "center",
+                            fontSize: 32,
                             fontWeight: "bold",
                             color: "white",
+                            marginBottom: -2
                           }}
                         >
-                          {22}
+                          {departureDay}
                         </Title>
                         <Paragraph
                           style={{
                             textAlign: "center",
                             fontSize: 20,
+                            fontWeight: "500",
                             color: "white",
                           }}
                         >
-                          {"Nov"}
+                          {departureMonth}
                         </Paragraph>
                       </View>
                       <View style={styles.iconContainer}>
                         <MaterialIcons
                           name={"my-location"}
-                          size={25}
+                          size={24}
                           color={"white"}
                           marginTop={15}
                         />
                         <Entypo
                           name={"dots-three-vertical"}
-                          size={25}
+                          size={24}
                           color={"white"}
-                          marginTop={5}
+                          marginTop={4}
                         />
                         <MaterialIcons
                           name={"location-pin"}
-                          size={25}
+                          size={24}
                           color={"white"}
                           marginTop={3}
                         />
@@ -119,12 +153,12 @@ export default function HomeScreen({ navigation }) {
                       <View style={{ position: "relative" }}>
                         {/* if driver then using steering wheel icon, else use passenger icon */}
                         {/* SUBSTITUTE */}
-                        {isDriver ? (
+                        {offer.isDriver ? (
                           <MaterialCommunityIcons
                             name={"steering"}
-                            size={50}
+                            size={46}
                             color={"white"}
-                            marginTop={15}
+                            marginTop={28}
                             position={"absolute"}
                             top={-70}
                             right={-230}
@@ -132,9 +166,9 @@ export default function HomeScreen({ navigation }) {
                         ) : (
                           <MaterialCommunityIcons
                             name={"seat-passenger"}
-                            size={50}
+                            size={46}
                             color={"white"}
-                            marginTop={15}
+                            marginTop={28}
                             position={"absolute"}
                             top={-70}
                             right={-230}
@@ -143,66 +177,69 @@ export default function HomeScreen({ navigation }) {
                         <Text
                           style={{
                             color: "red",
+                            fontSize: 13,
                             position: "absolute",
-                            top: 10,
+                            top: 9,
                             right: -230,
                           }}
                         >
-                          {"Reserved:"}
+                          {"Reserved"}
                         </Text>
                         {/* SUBSTITUTE */}
                         <Text
                           style={{
                             color: "red",
-                            marginTop: 20,
+                            fontSize: 13,
+                            marginTop: 15,
                             position: "absolute",
                             top: 10,
                             right: -226,
                           }}
                         >
-                          {"1/6 seats"}
+                          {offer.seatsTaken}/{offer.seatsAvailable} seats
                         </Text>
                       </View>
                       <View>
-                        <Text style={{ fontSize: 20, color: "white" }}>
+                        <Text style={{ fontSize: 18, color: "white", fontWeight: "600", letterSpacing: 1.2 }}>
                           {"UCSB"}
                         </Text>
-                        <Text style={{ color: "white" }}>{"11:00 AM"}</Text>
+                        <Text style={{ fontSize: 12.5, color: "white" }}>{departureTime}</Text>
                         <Text
-                          style={{ fontSize: 20, marginTop: 5, color: "white" }}
+                          style={{ fontSize: 18, marginTop: 5, color: "white", fontWeight: "600", letterSpacing: 1.2 }}
                         >
                           {offer.destination && offer.destination.split(",")[0]}
                         </Text>
-                        <Text style={{ color: "white" }}>{"1:00 PM"}</Text>
+                        <Text style={{ fontSize: 12.5, color: "white" }}>{arrivalTime}</Text>
                       </View>
 
-                      {/* <Text variant="titleLarge" style={styles.text3}>Departure: {offer.departure} </Text>
-                                                <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
-                                                <Text variant="bodyMedium" style={styles.text3}>Fuel price: {offer.fuelPrice} $</Text>
-                                                <Text variant="bodyMedium" style={styles.text3}>Vehicle Model:</Text> */}
                     </Card.Content>
-                    {/* <Card.Actions>
-                                            <Button onPress ={() => navigation.navigate('Home')} style={styles.button}><Text style={styles.text3}>Cancel Ride</Text></Button>
-                                        </Card.Actions> */}
                   </Card>
                 </TouchableRipple>
-              ))}
+              )})}
             </View>
           </List.Accordion>
           <List.Accordion
             expanded={expandedPosted}
             onPress={handleExpandPosted}
-            style={{ marginTop: 10 }}
-            title="Posted Ride Offers"
+            style={{ marginTop: 10, paddingLeft: 23 }}
+            title="Your Ride Offers"
+            titleStyle= {{ fontSize: 17, fontWeight: 500 }}
           >
             <View style={{ marginTop: 10, alignItems: "center" }}>
-              {rideOffers.map((offer, index) => (
+              {postedRideOffers.map((offer, index) => {
+                const departureDate = offer.departureTime.toDate();
+                const departureDay = departureDate.getDate();
+                const departureMonth = departureDate.toLocaleString('en-us', { month: 'short' });
+                const departureTime = departureDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                const arrivalDate = offer.arrivalTime.toDate();
+                const arrivalTime = arrivalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                
+                return (
                 <TouchableRipple
                   key={index}
                   onPress={() => openDetailScreen(offer)}
                 >
                   <Card key={index} style={styles.card}>
-                    {/* <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text4} subtitle={`Destination: ${offer.destination}`} subtitleStyle={styles.text3} /> */}
                     <Card.Content
                       style={{ flexDirection: "row", alignItems: "center" }}
                     >
@@ -210,40 +247,43 @@ export default function HomeScreen({ navigation }) {
                         {/* SUBSTITUTE */}
                         <Title
                           style={{
-                            fontSize: 30,
+                            textAlign: "center",
+                            fontSize: 32,
                             fontWeight: "bold",
                             color: "white",
+                            marginBottom: -2
                           }}
                         >
-                          {22}
+                          {departureDay}
                         </Title>
                         {/* SUBSTITUTE */}
                         <Paragraph
                           style={{
                             textAlign: "center",
                             fontSize: 20,
+                            fontWeight: "500",
                             color: "white",
                           }}
                         >
-                          {"Nov"}
+                          {departureMonth}
                         </Paragraph>
                       </View>
                       <View style={styles.iconContainer}>
                         <MaterialIcons
                           name={"my-location"}
-                          size={25}
+                          size={24}
                           color={"white"}
                           marginTop={15}
                         />
                         <Entypo
                           name={"dots-three-vertical"}
-                          size={25}
+                          size={24}
                           color={"white"}
-                          marginTop={5}
+                          marginTop={4}
                         />
                         <MaterialIcons
                           name={"location-pin"}
-                          size={25}
+                          size={24}
                           color={"white"}
                           marginTop={3}
                         />
@@ -252,25 +292,29 @@ export default function HomeScreen({ navigation }) {
                         <Text
                           style={{
                             color: "white",
+                            fontWeight: "500",
+                            fontSize: 14.5,
                             position: "absolute",
-                            marginTop: 15,
+                            marginTop: 33,
                             top: -70,
                             right: -230,
                           }}
                         >
-                          {"Total Earning:"}
+                          {"Total Earnings"}
                         </Text>
                         {/* SUBSTITUTE */}
                         <Text
                           style={{
                             color: "white",
+                            fontWeight: "500",
+                            fontSize: 14.5,
                             position: "absolute",
-                            marginTop: 35,
+                            marginTop: 52,
                             top: -70,
                             right: -226,
                           }}
                         >
-                          {"$60"}
+                          ${offer.totalPrice}
                         </Text>
                         <Text
                           style={{
@@ -280,48 +324,41 @@ export default function HomeScreen({ navigation }) {
                             right: -230,
                           }}
                         >
-                          {"Reserved:"}
+                          {"Reserved"}
                         </Text>
                         {/* SUBSTITUTE */}
                         <Text
                           style={{
                             color: "red",
-                            marginTop: 20,
+                            fontSize: 13,
+                            marginTop: 15,
                             position: "absolute",
                             top: 10,
                             right: -226,
                           }}
                         >
-                          {"1/6 seats"}
+                          {offer.seatsTaken}/{offer.seatsAvailable} seats
                         </Text>
                       </View>
                       <View>
                         {/* SUBSTITUTE */}
-                        <Text style={{ fontSize: 20, color: "white" }}>
+                        <Text style={{ fontSize: 18, color: "white", fontWeight: "600", letterSpacing: 1.2 }}>
                           {"UCSB"}
                         </Text>
                         {/* SUBSTITUTE */}
-                        <Text style={{ color: "white" }}>{"11:00 AM"}</Text>
+                        <Text style={{ fontSize: 12.5, color: "white" }}>{departureTime}</Text>
                         <Text
-                          style={{ fontSize: 20, marginTop: 5, color: "white" }}
+                          style={{ fontSize: 18,  marginTop: 5, color: "white", fontWeight: "600", letterSpacing: 1.2 }}
                         >
                           {offer.destination && offer.destination.split(",")[0]}
                         </Text>
                         {/* SUBSTITUTE */}
-                        <Text style={{ color: "white" }}>{"1:00 PM"}</Text>
+                        <Text style={{ fontSize: 12.5, color: "white" }}>{arrivalTime}</Text>
                       </View>
-
-                      {/* <Text variant="titleLarge" style={styles.text3}>Departure: {offer.departure} </Text>
-                                                <Text variant="titleLarge" style={styles.text3}>Total distance:</Text>
-                                                <Text variant="bodyMedium" style={styles.text3}>Fuel price: {offer.fuelPrice} $</Text>
-                                                <Text variant="bodyMedium" style={styles.text3}>Vehicle Model:</Text> */}
                     </Card.Content>
-                    {/* <Card.Actions>
-                                            <Button onPress ={() => navigation.navigate('Home')} style={styles.button}><Text style={styles.text3}>Cancel Ride</Text></Button>
-                                        </Card.Actions> */}
                   </Card>
                 </TouchableRipple>
-              ))}
+              )})}
             </View>
           </List.Accordion>
         </ScrollView>
