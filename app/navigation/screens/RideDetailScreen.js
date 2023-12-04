@@ -3,10 +3,11 @@ import * as React from 'react';
 import { Card, Title, Paragraph, Avatar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native'; 
 import Entypo from "react-native-vector-icons/Entypo";
-import { getTripDistance } from '../actions/getTripDistance';
+import { getUserDetails } from '../actions/getUserDetails';
 
 const RideDetailScreen = ({ route }) => {
     const [tripDistance, setTripDistance] = React.useState(0);
+    const [driverDetails, setDriverDetails] = React.useState()
     const { rideDetails } = route.params;
     {/* SUBSTITUTE */}
     const cancelRide = () => {
@@ -14,12 +15,12 @@ const RideDetailScreen = ({ route }) => {
     };
 
     React.useEffect(() => {
-        const fetchTripDistance = async () => {
-            //retrieve trip distance 
-            let newTripDistance = await getTripDistance(rideDetails.departureCoord, rideDetails.destinationCoord);
-            setTripDistance(Number(newTripDistance.toFixed(1)));
+        const fetchDriverDetails = async () => {
+            //retrieve driver details
+            let newDriverDetails = await getUserDetails(rideDetails.driverUserUID);
+            setDriverDetails(newDriverDetails);
         }
-        fetchTripDistance();
+        fetchDriverDetails();
     }, [])
 
     const departureDate = rideDetails.departureTime.toDate();
@@ -55,7 +56,7 @@ const RideDetailScreen = ({ route }) => {
                         <View style={{marginLeft: 24}}>
                             <Entypo name={"flow-line"} size={90} color={"white"} style={{ transform: [{ rotate: '90deg' }], marginTop: -32}} />
                             <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white", marginTop: -26 }}>{hours + "H " + minutes + " M"}</Paragraph>
-                            <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white" }}>{tripDistance + " mi"}</Paragraph>
+                            <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white" }}>{ rideDetails.tripDistance.toFixed(1) + " mi"}</Paragraph>
                         </View>
                         <View style={{ marginLeft: 'auto' }}>
                             {/* SUBSTITUTE */}
@@ -78,14 +79,14 @@ const RideDetailScreen = ({ route }) => {
                         </View>
                         <View>
                             {/* SUBSTITUTE */}
-                            <Title style={{fontSize: 30, fontWeight: 'bold', color:"white"}}>{"John S."}</Title>
+                            <Title style={{fontSize: 30, fontWeight: 'bold', color:"white"}}>{driverDetails && driverDetails.firstName + " " + driverDetails.lastName[0] + "."}</Title>
                             {/* SUBSTITUTE */}
                             <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"Rating: 4.5"}</Paragraph>
                             {/* SUBSTITUTE */}
                             <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"Vehicle Model: "}</Paragraph>
                         </View>
                         <View>
-                            <Entypo name={"star"} size={20} color={"white"} style={{ marginLeft: -35, marginTop: 9 }} />
+                            <Entypo name={"star"} size={17} color={"white"} style={{ marginLeft: -30, marginTop: 9 }} />
                         </View>
                     </Card.Content>
                 </Card>
@@ -96,7 +97,7 @@ const RideDetailScreen = ({ route }) => {
                     <Card.Content style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                         <View>
                             {/* SUBSTITUTE */}
-                            <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white" }}>{"1 seat(s) x $20.00 ............... $20.00"}</Paragraph>
+                            <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white" }}>{"1 seat(s) x $" + rideDetails.passengerSeatCost + " ............... $" + Number(rideDetails.passengerSeatCost).toFixed(2)}</Paragraph>
                             {/* SUBSTITUTE */}
                             <Paragraph  style={{ textAlign: 'center', fontSize: 15, color:"white" }}>{"Service Fees x $5 ............... $5.00"}</Paragraph>
                         </View>
@@ -107,7 +108,7 @@ const RideDetailScreen = ({ route }) => {
                                 </View>
                                 <View style={{ marginLeft: 'auto' }}>
                                     {/* SUBSTITUTE */}
-                                    <Paragraph  style={{fontWeight: 'bold', textAlign: 'right', fontSize: 20, color:"black" }}>{"$25.00"}</Paragraph>
+                                    <Paragraph  style={{fontWeight: 'bold', textAlign: 'right', fontSize: 20, color:"black" }}>{"$" + (Number(rideDetails.passengerSeatCost) + Number(5)).toFixed(2)}</Paragraph>
                                 </View>
                             </Card.Content>
                         </Card>

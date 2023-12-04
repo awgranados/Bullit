@@ -34,6 +34,7 @@ export default async function acceptRide(docUID) {
       acceptedSeatPrice = rideOffer.data().seatPrice;
       await updateDoc(doc(firestore, "rideOffers", docUID), {
         seatsTaken: newSeatsTaken,
+        passengerSeatCost: acceptedSeatPrice,
         seatPrice: adjustSeatPrice(totalPrice, newSeatsTakenForCalculation),
         passengersUserUID: arrayUnion(user.uid),
       });

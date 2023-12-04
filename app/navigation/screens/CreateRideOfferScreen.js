@@ -8,6 +8,7 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { getTripDuration } from '../actions/getTripDuration';
 import { Timestamp } from "firebase/firestore";
+import auth from "../../app/firebaseConfig";
 
 const CreateRideOfferScreen = () => {
     const [dest, setDest] = React.useState("");
@@ -18,6 +19,7 @@ const CreateRideOfferScreen = () => {
     const [departureDate, setDepartureDate] = React.useState(new Date());
     const [showDatePicker, setShowDatePicker] = React.useState(false);
     const [seats, setSeats] = React.useState(4);
+    const user = auth.currentUser;
 
     const navigation = useNavigation();
 
@@ -37,14 +39,17 @@ const CreateRideOfferScreen = () => {
         return; // Return early to prevent further execution
       }
 
-      let arrivalTime = new Date()
+      let arrivalTime = new Date();
+      let tripDistance = 0;
 
       try{
-        const tripDuration = await getTripDuration(departureCoord, destCoord);
+        const trip = await getTripDuration(departureCoord, destCoord);
         //Calculate Arrival Time
-        arrivalTime = new Date(departureDate.getTime() + tripDuration * 1000)
+        arrivalTime = new Date(departureDate.getTime() + trip.duration * 1000);
+        //trip distance
+        tripDistance = trip.distance;
       } catch(error){
-        console.error("Error in try", error)
+        console.error("Error in try", error);
       }
 
 
@@ -56,10 +61,12 @@ const CreateRideOfferScreen = () => {
         destinationCoord: destCoord,
         destination: dest,
         arrivalTime: Timestamp.fromDate(arrivalTime),
+        tripDistance: tripDistance,
         totalPrice: fuel_price,
         seatsAvailable: seats,
         seatsTaken: 0,
-        seatPrice: fuel_price
+        seatPrice: fuel_price,
+        driverUserUID: user.uid,
        });
       navigation.navigate('DriverPage'); 
     };

@@ -10,8 +10,10 @@ export const getTripDuration = async (origin, destination) => {
   
       // Check if the response is OK
       if (data.status === 'OK') {
-        const durationValue = data.rows[0].elements[0].duration.value;
-        return durationValue;
+        const trip = {};
+        trip.duration = data.rows[0].elements[0].duration.value;
+        trip.distance = Number(data.rows[0].elements[0].distance.value * 0.000621371);
+        return trip;
       } else {
         throw new Error('API request failed');
       }
