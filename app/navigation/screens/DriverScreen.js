@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StyleSheet} from 'react-native';
 import {CreateButton} from 'app/app/button';
 import RideContext from '../context/RideContext';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
@@ -19,6 +19,7 @@ export default function DriverScreen({navigation}) {
     const user = auth.currentUser;
 
     return(
+        <ScrollView>
         <View style={styles.container}>
             <View style={{alignItems:'center'}}>
                 <Text
@@ -77,7 +78,7 @@ export default function DriverScreen({navigation}) {
                 return (
                     showOffer && 
                     (<Card key={index} style={styles.card}>
-                    <Card.Title title={`Ride ${index + 1}`} titleStyle={styles.text3} subtitle={`Destination: ${offers.destination}`} subtitleStyle={styles.text3} />
+                    <Card.Title title={`Destination: ${offers.destination}`} titleStyle={styles.text3} />
                     <Card.Content>
                         <Text variant="titleLarge" style={styles.text3}>
                         {formattedDate}
@@ -94,6 +95,7 @@ export default function DriverScreen({navigation}) {
                 })}
             </View>
         </View>
+        </ScrollView>
     );
 }
 
