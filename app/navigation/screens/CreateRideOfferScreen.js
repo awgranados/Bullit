@@ -40,14 +40,9 @@ const CreateRideOfferScreen = () => {
       let arrivalTime = new Date()
 
       try{
-        console.log("Inside try block");
-        console.log("Departure Coordinates: ", departureCoord);
-        console.log("Destination Coordinates: ", destCoord);
         const tripDuration = await getTripDuration(departureCoord, destCoord);
-        console.log("trip duration: ", tripDuration)
         //Calculate Arrival Time
         arrivalTime = new Date(departureDate.getTime() + tripDuration * 1000)
-        console.log("arrival time: ", arrivalTime)
       } catch(error){
         console.error("Error in try", error)
       }

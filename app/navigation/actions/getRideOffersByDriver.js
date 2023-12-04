@@ -44,9 +44,6 @@ export default async function getRideOffersByDriver(callback) {
         callback(documents);
       });
   
-      return () => unsubscribe();
+      return unsubscribe;
     }
-  
-    // If there's no user, return a function with no effect
-    return () => {};
   }

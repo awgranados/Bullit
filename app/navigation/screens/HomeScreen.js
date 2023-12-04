@@ -26,23 +26,26 @@ export default function HomeScreen({ navigation }) {
   const [acceptedRides, setAcceptedRides] = React.useState([]);
   const [postedRideOffers, setPostedRideOffers] = React.useState([])
 
-  React.useEffect(() => {
-    // Pass the setter function to the fetch function
-    const unsubscribe = getRideOffersByDriver(setPostedRideOffers);
-    // Cleanup function to unsubscribe when the component unmounts
-    return () => unsubscribe();
-  }, []);
-
+  
   React.useEffect(() => {
     const unsubscribe = getAcceptedRidesByUser([
       setAcceptedPassengerRides,
       setAcceptedDriverRides,
     ]);
-
+    
     // Clean up the listeners when the component unmounts
     return () => unsubscribe();
   }, []);
 
+  React.useEffect(() => {
+    try {
+      const unsubscribe = getRideOffersByDriver(setPostedRideOffers);
+      return () => unsubscribe();
+    } catch (error) {
+      console.error("Error fetching ride offers:", error);
+    }
+  }, []);
+  
   React.useEffect(() => {
     //Combine lists of accepted rides
     const mergedAcceptedRides = [...acceptedPassengerRides, ...acceptedDriverRides];
@@ -219,11 +222,19 @@ export default function HomeScreen({ navigation }) {
             expanded={expandedPosted}
             onPress={handleExpandPosted}
             style={{ marginTop: 10, paddingLeft: 23 }}
-            title="Posted Ride Offers"
+            title="Your Ride Offers"
             titleStyle= {{ fontSize: 17, fontWeight: 500 }}
           >
             <View style={{ marginTop: 10, alignItems: "center" }}>
-              {rideOffers.map((offer, index) => (
+              {postedRideOffers.map((offer, index) => {
+                const departureDate = offer.departureTime.toDate();
+                const departureDay = departureDate.getDate();
+                const departureMonth = departureDate.toLocaleString('en-us', { month: 'short' });
+                const departureTime = departureDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                const arrivalDate = offer.arrivalTime.toDate();
+                const arrivalTime = arrivalDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+                
+                return (
                 <TouchableRipple
                   key={index}
                   onPress={() => openDetailScreen(offer)}
@@ -236,13 +247,14 @@ export default function HomeScreen({ navigation }) {
                         {/* SUBSTITUTE */}
                         <Title
                           style={{
+                            textAlign: "center",
                             fontSize: 32,
                             fontWeight: "bold",
                             color: "white",
                             marginBottom: -2
                           }}
                         >
-                          {22}
+                          {departureDay}
                         </Title>
                         {/* SUBSTITUTE */}
                         <Paragraph
@@ -253,7 +265,7 @@ export default function HomeScreen({ navigation }) {
                             color: "white",
                           }}
                         >
-                          {"Nov"}
+                          {departureMonth}
                         </Paragraph>
                       </View>
                       <View style={styles.iconContainer}>
@@ -302,7 +314,7 @@ export default function HomeScreen({ navigation }) {
                             right: -226,
                           }}
                         >
-                          {"$60"}
+                          ${offer.totalPrice}
                         </Text>
                         <Text
                           style={{
@@ -325,7 +337,7 @@ export default function HomeScreen({ navigation }) {
                             right: -226,
                           }}
                         >
-                          {"1/6 seats"}
+                          {offer.seatsTaken}/{offer.seatsAvailable} seats
                         </Text>
                       </View>
                       <View>
@@ -334,19 +346,19 @@ export default function HomeScreen({ navigation }) {
                           {"UCSB"}
                         </Text>
                         {/* SUBSTITUTE */}
-                        <Text style={{ fontSize: 12.5, color: "white" }}>{"11:00 AM"}</Text>
+                        <Text style={{ fontSize: 12.5, color: "white" }}>{departureTime}</Text>
                         <Text
                           style={{ fontSize: 18,  marginTop: 5, color: "white", fontWeight: "600", letterSpacing: 1.2 }}
                         >
                           {offer.destination && offer.destination.split(",")[0]}
                         </Text>
                         {/* SUBSTITUTE */}
-                        <Text style={{ fontSize: 12.5, color: "white" }}>{"1:00 PM"}</Text>
+                        <Text style={{ fontSize: 12.5, color: "white" }}>{arrivalTime}</Text>
                       </View>
                     </Card.Content>
                   </Card>
                 </TouchableRipple>
-              ))}
+              )})}
             </View>
           </List.Accordion>
         </ScrollView>
