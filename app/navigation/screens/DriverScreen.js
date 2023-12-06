@@ -59,12 +59,16 @@ export default function DriverScreen({navigation}) {
                 {rideOffers.map((offers, index) => {
                 const departureDate = offers.departureTime.toDate();
                 const passengersUserUID = offers.passengersUserUID;
+                const driverUserUID = offers.driverUserUID;
                 let showOffer = true;
                     
                 if (passengersUserUID){
                     for (const passenger of passengersUserUID) {
                         if (user.uid === passenger) showOffer = false;
                     }
+                }
+                if (driverUserUID){
+                    if (user.uid === driverUserUID) showOffer = false;
                 }
 
                 const options = {
