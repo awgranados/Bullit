@@ -149,7 +149,7 @@ export default function DriverScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 60,
+        paddingTop: 52,
         flex: 1,
         backgroundColor: "#FFFFFF",
     },
@@ -175,6 +175,10 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#FF4618',
     },
-    list: {flexDirection:'column', gap:10}
+    list: {
+        flexDirection:'column',
+        gap:10,
+        marginBottom: 120
+    }
 });
 

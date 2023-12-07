@@ -378,7 +378,7 @@ export default function HomeScreen({ navigation }) {
       <View style={{backgroundColor: "#F4F4F4"}}>
       <View style={{borderColor: "#d6d4d4", borderWidth: 1.2, marginBottom: 25} }></View>
       <TouchableRipple
-      style={{width: "46%", alignSelf: "center", marginBottom: 25}}
+      style={{width: "49%", alignSelf: "center", marginBottom: 25}}
       onPress={() => navigation.navigate('Create Ride Offer')}
         >
           <Button
@@ -402,7 +402,7 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 60,
+    paddingTop: 40,
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
