@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, TextInput} from 'react-native';
 import {CreateButton} from 'app/app/button';
 import RideContext from '../context/RideContext';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
+import { FontAwesome } from '@expo/vector-icons';
 
 import { Avatar, Button, Card } from 'react-native-paper';
 import acceptRide from '../actions/acceptRide';
@@ -17,89 +18,133 @@ export default function DriverScreen({navigation}) {
       })
     const { rideOffers } = React.useContext(RideContext);
     const user = auth.currentUser;
+    const [destination, setDestination] = React.useState("");
+    const [searchIconColor, setSearchIconColor] = React.useState("#c4c4c4");
+    const [searchBoxColor, setSearchBoxColor] = React.useState("#c4c4c4")
+
+    const autocompleteRef = React.useRef(null);
+
+    const handleSearchClear = (text) => {
+        if (text === ""){
+            setDestination("");
+        }
+    };
+
+    const handleSearchFocus = () => {
+        setSearchIconColor("#012d5c");
+        setSearchBoxColor("#012d5c");
+
+      };
+
+    const handleSearchBlur = () => {
+        setSearchIconColor("#c4c4c4")
+        setSearchBoxColor("#c4c4c4");
+    };
 
     return(
-        <ScrollView>
-        <View style={styles.container}>
-            <View style={{alignItems:'center'}}>
-                <Text
-                    style = {styles.text}>Driver Screen
-                </Text>
-            </View>
+            <View  style={styles.container}>
+                <View style={{alignItems:'center'}}>
+                    <Text
+                        style = {styles.text}>Let's find you a ride!
+                    </Text>
+                </View>
 
-            <View style={{padding:20, flexDirection:'column', gap:10}}>
-                <CreateButton text='Create Ride Offer' onPress ={() => navigation.navigate('CreateRideOffer')}/>
-                
-                <GooglePlacesAutocomplete
-                placeholder="Search for Destination"
-                fetchDetails={true}
-                GooglePlacesSearchQuery={{
-                    rankby: "distance"
-                }}
-                onPress={(data, details = null) => {
-                    console.log(data['description'])
-                            const location_name = data['description']
-                            console.log(location_name)
-                            navigation.navigate('RideList', {school: location_name})
-                }}
-                query={{
-                    key: "AIzaSyD5s29CI_yIZQyR2TsfucfAtVpZCLMINcs",
-                    language: "en",
-                    components: "country:us",
-                    types: "establishment",
-                    radius: 30000,
-                    location: `${region.latitude}, ${region.longitude}`
-                }}
-                styles={{
-                    container: { flex: 0, width: "100%", zIndex: 1 },
-                    listView: { backgroundColor: "black" }
-                }}
-                />
-
-                {rideOffers.map((offers, index) => {
-                const departureDate = offers.departureTime.toDate();
-                const passengersUserUID = offers.passengersUserUID;
-                const driverUserUID = offers.driverUserUID;
-                let showOffer = true;
+                <View style={{padding:20, flexDirection:'column', gap:10}}>
+                    <CreateButton text='Create Ride Offer' onPress ={() => navigation.navigate('CreateRideOffer')}/>
+                    <View style={{flexDirection: "row", gap: -1, borderWidth: 2, borderRadius: 8, borderColor: searchBoxColor, width: "98%"}}>
+                        <FontAwesome name="search" size={21} color={searchIconColor} style={{marginTop: 13, paddingLeft: 12}} />
+                        <GooglePlacesAutocomplete
+                        placeholder="Where are you going?"
+                        fetchDetails={true}
+                        GooglePlacesSearchQuery={{
+                            rankby: "distance"
+                        }}
+                        onPress={(data, details = null) => {
+                            setDestination(data.description);
+                        }}
+                        textInputProps={{
+                            InputComp: TextInput,
+                            onChangeText: (text) => handleSearchClear(text),
+                            onFocus: handleSearchFocus,
+                            onBlur: handleSearchBlur,
+                            placeholderTextColor: searchIconColor,
+                        }}
+                        enablePoweredByContainer={false}
+                        ref={autocompleteRef}
+                        onChagneText={()=>handleSearchFocus}
+                        query={{
+                            key: "AIzaSyD5s29CI_yIZQyR2TsfucfAtVpZCLMINcs",
+                            language: "en",
+                            components: "country:us",
+                            types: "(cities)",
+                            radius: 30000,
+                            location: `${region.latitude}, ${region.longitude}`
+                        }}
+                        styles={{
+                            container: { flex: 0, width: "90%", zIndex: 1, paddingTop: 3.5 },
+                            listView: { backgroundColor: "black" },
+                        }}
+                        />
+                    </View>
+                    <ScrollView style={styles.list}>
+                    {rideOffers.map((offers, index) => {
+                    const departureDate = offers.departureTime.toDate();
+                    const passengersUserUID = offers.passengersUserUID;
+                    const driverUserUID = offers.driverUserUID;
+                    const offerDestination = offers.destination;
+                    let showOffer = true;
+                    let foundResult = false;
                     
-                if (passengersUserUID){
-                    for (const passenger of passengersUserUID) {
-                        if (user.uid === passenger) showOffer = false;
+                    
+                        
+                    if (passengersUserUID){
+                        for (const passenger of passengersUserUID) {
+                            if (user.uid === passenger) showOffer = false;
+                        }
                     }
-                }
-                if (driverUserUID){
-                    if (user.uid === driverUserUID) showOffer = false;
-                }
+                    if (driverUserUID){
+                        if (user.uid === driverUserUID) showOffer = false;
+                    }
+                    if (destination !== "") {
+                        if (destination) {
+                            if (destination !== offerDestination){
+                                showOffer = false;
+                            }
+                            else  foundResult = true;
+                        }
+                        
+                     }
+                     
 
-                const options = {
-                    weekday: 'long',
-                    month: 'short',
-                    day: 'numeric',
-                };
+                    const options = {
+                        weekday: 'long',
+                        month: 'short',
+                        day: 'numeric',
+                    };
 
-                const formattedDate = departureDate.toLocaleDateString('en-US', options);
-
-                return (
-                    showOffer && 
-                    (<Card key={index} style={styles.card}>
-                    <Card.Title title={`Destination: ${offers.destination}`} titleStyle={styles.text3} />
-                    <Card.Content>
-                        <Text variant="titleLarge" style={styles.text3}>
-                        {formattedDate}
-                        </Text>
-                        <Text variant="titleLarge" style={styles.text3}>Departure: {offers.departure} </Text>
-                        <Text variant="titleLarge" style={styles.text3}>Seats Taken: {offers.seatsTaken} / {offers.seatsAvailable}</Text>
-                        <Text variant="bodyMedium" style={styles.text3}>Seat Price: ${offers.seatPrice}</Text>
-                    </Card.Content>
-                    <Card.Actions>
-                        <Button onPress={() => acceptRide(offers.id)} style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
-                    </Card.Actions>
-                    </Card>)
-                );
-                })}
+                    const formattedDate = departureDate.toLocaleDateString('en-US', options);
+                    if (index === rideOffers.length - 1 && foundResult) return (<Text key={index} style={{ fontSize: 16, fontWeight: "600", marginTop: 20, textAlign: "center"}}>No rides found.</Text>)
+                    else
+                    return (
+                        showOffer && 
+                        (<Card key={index} style={styles.card}>
+                        <Card.Title title={`Destination: ${offers.destination}`} titleStyle={styles.text3} />
+                        <Card.Content>
+                            <Text variant="titleLarge" style={styles.text3}>
+                            {formattedDate}
+                            </Text>
+                            <Text variant="titleLarge" style={styles.text3}>Departure: {offers.departure} </Text>
+                            <Text variant="titleLarge" style={styles.text3}>Seats Taken: {offers.seatsTaken} / {offers.seatsAvailable}</Text>
+                            <Text variant="bodyMedium" style={styles.text3}>Seat Price: ${offers.seatPrice}</Text>
+                        </Card.Content>
+                        <Card.Actions>
+                            <Button onPress={() => acceptRide(offers.id)} style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
+                        </Card.Actions>
+                        </Card>)
+                    );
+                    })}</ScrollView>
+                </View>
             </View>
-        </View>
-        </ScrollView>
     );
 }
 
@@ -112,10 +157,13 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 26,
         fontWeight: 'bold',
-        color: "#002E5D",
+        color: "#00366e",
+        marginTop: 20,
+        marginBottom: 6
     },
     card: {
         backgroundColor: '#002E5D',
+        marginBottom: 10
     },
     text2: {
         fontSize: 20,
@@ -128,5 +176,6 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#FF4618',
     },
+    list: {flexDirection:'column', gap:10}
 });
 
