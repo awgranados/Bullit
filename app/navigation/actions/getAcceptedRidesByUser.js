@@ -17,7 +17,6 @@ export default async function getAcceptedRidesByUser(callbacks) {
   const user = auth.currentUser;
   const unsubscribes = [];
 
-  if (user) {
     const conditions = [
       { field: "passengerUserUID", operator: "==", value: user.uid },
       { field: "driverUserUID", operator: "==", value: user.uid },
@@ -53,7 +52,7 @@ export default async function getAcceptedRidesByUser(callbacks) {
       unsubscribes.push(unsubscribe);
     });
 
-    // Return an array of unsubscribe functions
-    return () => unsubscribes.forEach((unsubscribe) => unsubscribe());
-  }
+  
+  // Return an array of unsubscribe functions
+  return () => unsubscribes.forEach((unsubscribe) => unsubscribe());
 }
