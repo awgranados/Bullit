@@ -64,45 +64,44 @@ export default function ProfileScreen({navigation}) {
   };
  
   return(
-      
     <View style={styles.container}>
+    
     <View style={styles.profileContainer}>
-      <TouchableOpacity /* replace with zoom-in function*/> 
-        {user.photoURL ? (
-          <Avatar.Image size={250} source={{ uri: user.photoURL }} />
-        ) : (
-          <Ionicons name="person-circle-outline" size={250} color="#002E5D" />
-        )}
-      </TouchableOpacity>
+    <TouchableOpacity onPress={updateProfilePicture}>
+      {user.photoURL ? (
+        <Avatar.Image size={250} source={{ uri: user.photoURL }} />
+      ) : (
+        <Ionicons name="person-circle-outline" size={250} color="#002E5D" />
+      )}
+    </TouchableOpacity>
 
-      {/* Edit Button */}
-      <TouchableOpacity
-        style={styles.editButton}
-        onPress={updateProfilePicture}
-      >
-        <Ionicons name="pencil-outline" size={24} color="#FFFFFF" />
-      </TouchableOpacity>
+    <TouchableOpacity style={styles.editButton}>
+      <Ionicons name="pencil-outline" size={24} color="#FFFFFF" />
+    </TouchableOpacity>
+  </View>
+  
+  <Text style={styles.header}>{user.displayName}</Text>
+  
+  <View style={styles.buttonContainer}>
+    <CreateButton text='Edit Display Name' onPress={toggleModal} />
+    <CreateButton text='Logout' onPress={signOut}/>
+  </View>
+  
+  <Modal visible={isModalVisible} animationType="slide">
+    <View style={styles.modalContainer}>
+      <Text style={styles.modalHeader}>Edit Display Name</Text>
+      <TextInput
+        style={styles.modalInput}
+        placeholder='Enter new display name'
+        onChangeText={setNewDisplayName}
+        value={newDisplayName}
+      />
+      <CreateButton text="Save" onPress={updateDisplayName} />
+      <CreateButton text="Cancel" onPress={toggleModal} />
     </View>
+  </Modal>
 
-          <Text style={styles.header}>{user.displayName}</Text>
-          <Text style = {styles.text}>{}</Text>                       
-          <CreateButton text='Edit Display Name'onPress={toggleModal} />
-          <CreateButton text='Logout' onPress={signOut}/>
-          <Modal visible={isModalVisible} animationType="slide">
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalHeader}>Edit Display Name</Text>
-          <TextInput
-            style={styles.modalInput}
-            placeholder={user.displayName}
-            onChangeText={setNewDisplayName}
-            value={newDisplayName}
-            
-          />
-          <CreateButton text="Save" onPress={updateDisplayName} />
-          <CreateButton text="Cancel" onPress={toggleModal} />
-        </View>
-      </Modal>
-      </View>
+</View>
   );
 
   
@@ -113,6 +112,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: "#FFFFFF",
+      marginBottom: 20,
+      marginTop: 20,
   },
   header: {
       fontSize: 35,
@@ -152,9 +153,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF4618',
     width: 250,
     height: 50,
-    alignSelf: 'center'
-},
-editButton: {
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    marginTop: 20, 
+    width: '100%', 
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  editButton: {
   position: 'absolute',
   bottom: 0,
   right: 0,
@@ -164,3 +172,90 @@ editButton: {
   zIndex: 1, // Ensure the button is displayed on top
 },
 });
+
+// #002E5D
+
+{/*  
+OLD RETURN::
+<View style={styles.container}>
+    <View style={styles.profileContainer}>
+      <TouchableOpacity > 
+      {user.photoURL ? (
+        <Avatar.Image size={250} source={{ uri: user.photoURL }} />
+      ) : (
+        <Ionicons name="person-circle-outline" size={250} color="#002E5D" />
+      )}
+    </TouchableOpacity>
+
+    <TouchableOpacity
+      style={styles.editButton}
+      onPress={updateProfilePicture}
+    >
+      <Ionicons name="pencil-outline" size={24} color="#FFFFFF" />
+    </TouchableOpacity>
+  </View>
+    
+        <Text style={styles.header}>{user.displayName}</Text>
+        <Text style = {styles.text}>{}</Text>                       
+       <View style={styles.buttonContainer}>
+        <CreateButton text='Edit Display Name' onPress={toggleModal} />
+    <CreateButton text='Logout' onPress={signOut}/>
+  </View>
+      <Modal visible={isModalVisible} animationType="slide">
+      <View style={styles.modalContainer}>
+        <Text style={styles.modalHeader}>Edit Display Name</Text>
+        <TextInput
+          style={styles.modalInput}
+          placeholder={user.displayName}
+          onChangeText={setNewDisplayName}
+          value={newDisplayName}
+          
+        />
+        <CreateButton text="Save" onPress={updateDisplayName} />
+        <CreateButton text="Cancel" onPress={toggleModal} />
+      </View>
+      </Modal>
+  </View>
+  
+------
+NEW::
+return (
+  <View style={styles.container}>
+    
+    <View style={styles.profileContainer}>
+    <TouchableOpacity onPress={updateProfilePicture}>
+      {user.photoURL ? (
+        <Avatar.Image size={250} source={{ uri: user.photoURL }} />
+      ) : (
+        <Ionicons name="person-circle-outline" size={250} color="#002E5D" />
+      )}
+    </TouchableOpacity>
+
+    <TouchableOpacity style={styles.editButton}>
+      <Ionicons name="pencil-outline" size={24} color="#FFFFFF" />
+    </TouchableOpacity>
+  </View>
+  
+  <Text style={styles.header}>{user.displayName}</Text>
+  
+  <View style={styles.buttonContainer}>
+    <CreateButton text='Edit Display Name' onPress={toggleModal} />
+    <CreateButton text='Logout' onPress={signOut}/>
+  </View>
+  
+  <Modal visible={isModalVisible} animationType="slide">
+    <View style={styles.modalContainer}>
+      <Text style={styles.modalHeader}>Edit Display Name</Text>
+      <TextInput
+        style={styles.modalInput}
+        placeholder='Enter new display name'
+        onChangeText={setNewDisplayName}
+        value={newDisplayName}
+      />
+      <CreateButton text="Save" onPress={updateDisplayName} />
+      <CreateButton text="Cancel" onPress={toggleModal} />
+    </View>
+  </Modal>
+
+</View>
+);     */}
