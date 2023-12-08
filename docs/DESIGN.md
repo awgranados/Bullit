@@ -34,3 +34,11 @@ User Experience Considerations
 7. Provide driver details for respective ride to give riders safety reassurance (RETRO_2)
 8. User details page to personalize account (RETRO_2)
 9. Use of icons in cards and navbar to limit amount of words used so app is more aesthetic and intuitive (RETRO_2)
+
+Design Challenges
+---------------
+1. Figuring out how to integrate both ride and driver users in one app: only show certain features if user is an approved driver
+2. How to display large numbers of ride details in a single screen: using collapsible to only display rides of certain group or using search filter to search through ride offers
+3. Working around libraries or implementations that are iOS exclusively such as FirebaseUI Auth vs Firebase SDK Authentication
+4. Organizing navigation between specific pages along with a navbar
+5. Organizing various databases and how variables within each database are related to each other
