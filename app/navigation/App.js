@@ -7,11 +7,19 @@ import MainContainer from "./MainContainer";
 import { registerRootComponent } from "expo";
 import { RideProvider } from "./context/RideContext";
 import Splash from "./screens/SplashScreen";
+import { useFonts } from 'expo-font';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [rides, setRides] = React.useState([]);
+  let [fontsLoaded] = useFonts({
+    'Dhurjati': require('../assets/Dhurjati-Regular.ttf'),
+    'Montserrat-Regular': require('../assets/Montserrat-Regular.ttf'),
+    'Montserrat-Medium': require('../assets/Montserrat-Medium.ttf'),
+    'Montserrat-SemiBold': require('../assets/Montserrat-SemiBold.ttf'),
+    'Montserrat-Bold': require('../assets/Montserrat-Bold.ttf')
+  })
 
   return (
     <RideProvider value={{ rides, setRides }}>

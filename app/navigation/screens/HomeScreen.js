@@ -8,6 +8,7 @@ import {
   Paragraph,
   TouchableRipple,
 } from "react-native-paper";
+import { Button } from 'react-native-paper';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -15,6 +16,8 @@ import RideContext from "../context/RideContext";
 import getAcceptedRidesByUser from "../actions/getAcceptedRidesByUser";
 import getRideOffersByDriver from "../actions/getRideOffersByDriver";
 import { getRideOfferByReference } from "../actions/getRideOfferByRefrence";
+import { FontAwesome5 } from '@expo/vector-icons'; 
+
 
 export default function HomeScreen({ navigation }) {
   const { rideOffers } = React.useContext(RideContext);
@@ -80,21 +83,22 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "center" }}>
-        <Text style={styles.text}>Home Screen</Text>
+      <View style={{flexDirection:"row", justifyContent: "space-between", alignItems:"center", paddingHorizontal: 36}}>
+        <Text style={styles.text}>BULLIT</Text>
+        <MaterialIcons onPress={() => navigation.navigate("Profile")} name="account-circle" size={38} color="#002E5D" style={{marginTop: 20, marginRight: 12}} />
       </View>
-
+    <View style={{borderColor: "#EFEFF0", borderWidth: 1.7} }></View>
       <View style={{ flex: 1 }}>
         {/* <Text style={styles.text2}>Posted Ride Offers</Text> */}
         <ScrollView>
           <List.Accordion
             expanded={expandedUpcoming}
             onPress={handleExpandUpcoming}
-            style={{ marginTop: 10, paddingLeft: 23 }}
+            style={{ marginTop: 6, paddingLeft: 23,  }}
             title="Upcoming Trips"
-            titleStyle= {{ fontSize: 17, fontWeight: 500 }}
+            titleStyle= {{ fontSize: 18, fontFamily: "Montserrat-SemiBold"}}
           >
-            <View style={{ marginTop: 10, alignItems: "center" }}>
+            <View style={{ paddingBottom: 28, alignItems: "center", backgroundColor: "#F4F4F4",}}>
               {acceptedRides.map((offer, index) => {
                 const departureDate = offer.departureTime.toDate();
                 const departureDay = departureDate.getDate();
@@ -116,8 +120,8 @@ export default function HomeScreen({ navigation }) {
                         <Title
                           style={{
                             textAlign: "center",
-                            fontSize: 32,
-                            fontWeight: "bold",
+                            fontSize: 31,
+                            fontFamily: "Montserrat-Bold",
                             color: "white",
                             marginBottom: -2
                           }}
@@ -128,7 +132,7 @@ export default function HomeScreen({ navigation }) {
                           style={{
                             textAlign: "center",
                             fontSize: 20,
-                            fontWeight: "500",
+                            fontFamily: "Montserrat-Medium",
                             color: "white",
                           }}
                         >
@@ -181,8 +185,9 @@ export default function HomeScreen({ navigation }) {
                         )}
                         <Text
                           style={{
-                            color: "red",
+                            color: "#ff4a56",
                             fontSize: 13,
+                            fontFamily: "Montserrat-SemiBold",
                             position: "absolute",
                             top: 9,
                             right: -230,
@@ -193,7 +198,7 @@ export default function HomeScreen({ navigation }) {
                         {/* SUBSTITUTE */}
                         <Text
                           style={{
-                            color: "red",
+                            color: "#ff4a56",
                             fontSize: 13,
                             marginTop: 15,
                             position: "absolute",
@@ -205,12 +210,12 @@ export default function HomeScreen({ navigation }) {
                         </Text>
                       </View>
                       <View>
-                        <Text style={{ fontSize: 18, color: "white", fontWeight: "600", letterSpacing: 1.2 }}>
+                        <Text style={{ fontSize: 18, color: "white", fontFamily: "Montserrat-SemiBold", letterSpacing: 1.2 }}>
                           {"UCSB"}
                         </Text>
                         <Text style={{ fontSize: 12.5, color: "white" }}>{departureTime}</Text>
                         <Text
-                          style={{ fontSize: 18, marginTop: 5, color: "white", fontWeight: "600", letterSpacing: 1.2 }}
+                          style={{ fontSize: 18, marginTop: 5, color: "white", fontFamily: "Montserrat-SemiBold", letterSpacing: 1.2 }}
                         >
                           {offer.destination && offer.destination.split(",")[0]}
                         </Text>
@@ -228,9 +233,9 @@ export default function HomeScreen({ navigation }) {
             onPress={handleExpandPosted}
             style={{ marginTop: 10, paddingLeft: 23 }}
             title="Your Ride Offers"
-            titleStyle= {{ fontSize: 17, fontWeight: 500 }}
+            titleStyle= {{ fontSize: 18, fontFamily: "Montserrat-SemiBold" }}
           >
-            <View style={{ marginTop: 10, alignItems: "center" }}>
+            <View style={{alignItems: "center", paddingBottom: 28, backgroundColor: "#F4F4F4", }}>
               {postedRideOffers.map((offer, index) => {
                 const departureDate = offer.departureTime.toDate();
                 const departureDay = departureDate.getDate();
@@ -254,8 +259,8 @@ export default function HomeScreen({ navigation }) {
                         <Title
                           style={{
                             textAlign: "center",
-                            fontSize: 32,
-                            fontWeight: "bold",
+                            fontSize: 31,
+                            fontFamily: "Montserrat-Bold",
                             color: "white",
                             marginBottom: -2
                           }}
@@ -267,7 +272,7 @@ export default function HomeScreen({ navigation }) {
                           style={{
                             textAlign: "center",
                             fontSize: 20,
-                            fontWeight: "500",
+                            fontFamily: "Montserrat-Medium",
                             color: "white",
                           }}
                         >
@@ -298,7 +303,7 @@ export default function HomeScreen({ navigation }) {
                         <Text
                           style={{
                             color: "white",
-                            fontWeight: "500",
+                            fontFamily: "Montserrat-SemiBold",
                             fontSize: 14.5,
                             position: "absolute",
                             marginTop: 33,
@@ -324,8 +329,9 @@ export default function HomeScreen({ navigation }) {
                         </Text>
                         <Text
                           style={{
-                            color: "red",
+                            color: "#ff4a56",
                             position: "absolute",
+                            fontFamily: "Montserrat-SemiBold",
                             top: 10,
                             right: -230,
                           }}
@@ -335,7 +341,7 @@ export default function HomeScreen({ navigation }) {
                         {/* SUBSTITUTE */}
                         <Text
                           style={{
-                            color: "red",
+                            color: "#ff4a56",
                             fontSize: 13,
                             marginTop: 15,
                             position: "absolute",
@@ -369,27 +375,55 @@ export default function HomeScreen({ navigation }) {
           </List.Accordion>
         </ScrollView>
       </View>
+      <View style={{backgroundColor: "#F4F4F4"}}>
+      <View style={{borderColor: "#d6d4d4", borderWidth: 1.2, marginBottom: 25} }></View>
+      <TouchableRipple
+      style={{width: "49%", alignSelf: "center", marginBottom: 25}}
+      onPress={() => navigation.navigate('Create Ride Offer')}
+        >
+          <Button
+            style={{borderRadius: 5,
+                    shadowColor: '#171717',
+                    shadowOffset: {width: -2, height: 4},
+                    shadowOpacity: 0.4,
+                    shadowRadius: 8, 
+                    elevation: 25}}
+            mode="contained"
+            buttonColor="#f56447"
+            labelStyle={{color:"white", fontFamily: "Montserrat-SemiBold", fontSize: 18}}
+          >
+            <FontAwesome5 name="car" size={24} color="white" />{"  "}Offer a ride
+          </Button>
+          </TouchableRipple>
+          </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 60,
+    paddingTop: 40,
     flex: 1,
     backgroundColor: "#FFFFFF",
   },
   card: {
     backgroundColor: "#002E5D",
     width: 350,
-    marginTop: 10,
-  },
+    marginTop: 20,
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.3,
+    shadowRadius: 8, 
+    elevation: 30
+},
   text: {
-    fontSize: 26,
+    fontFamily: "Dhurjati",
+    fontSize: 60,
     fontWeight: "bold",
-    color: "#002E5D",
+    color: "#FE6A43",
   },
   text2: {
+    fontFamily: "Montserrat",
     fontSize: 20,
     fontWeight: "bold",
     color: "#002E5D",

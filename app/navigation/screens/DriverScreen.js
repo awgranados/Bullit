@@ -50,7 +50,6 @@ export default function DriverScreen({navigation}) {
                 </View>
 
                 <View style={{padding:20, flexDirection:'column', gap:10}}>
-                    <CreateButton text='Create Ride Offer' onPress ={() => navigation.navigate('CreateRideOffer')}/>
                     <View style={{flexDirection: "row", gap: -1, borderWidth: 2, borderRadius: 8, borderColor: searchBoxColor, width: "98%"}}>
                         <FontAwesome name="search" size={21} color={searchIconColor} style={{marginTop: 13, paddingLeft: 12}} />
                         <GooglePlacesAutocomplete
@@ -150,7 +149,7 @@ export default function DriverScreen({navigation}) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 60,
+        paddingTop: 52,
         flex: 1,
         backgroundColor: "#FFFFFF",
     },
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
         fontSize: 26,
         fontWeight: 'bold',
         color: "#00366e",
-        marginTop: 20,
+        marginTop: 36,
         marginBottom: 6
     },
     card: {
@@ -176,6 +175,10 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#FF4618',
     },
-    list: {flexDirection:'column', gap:10}
+    list: {
+        flexDirection:'column',
+        gap:10,
+        marginBottom: 120
+    }
 });
 
