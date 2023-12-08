@@ -7,7 +7,7 @@ import { doc, setDoc, Timestamp, GeoPoint, getDoc, data} from "firebase/firestor
 import { firestore } from "../../app/firebaseConfig";
 import { updateProfile , signOut} from "firebase/auth";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
+import * as ImagePicker from 'expo-image-picker';
 
 
 
@@ -15,25 +15,36 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 export default function ProfileScreen({navigation}) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [newDisplayName, setNewDisplayName] = useState('');
-  const [profilePicture, setProfilePicture] = useState(null);
   
   const user = auth.currentUser;
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-  
-  //style={{ textAlign: 'right', fontSize: 15, color:"black" }}>{user.email}
-  
-  //const userDocRef = doc(firestore, "userDetails", user.uid);
 
-  
   const signOut = () => {
     if(user){
      auth.signOut;
      navigation.navigate("Login");
     }
   };
+
+  const updateProfilePicture = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+  
+    if (!result.canceled) {
+      updateProfile(user, {
+        photoURL: result.assets[0].uri
+      })
+      console.log(result.assets[0].uri);
+      console.log(user.photoURL);
+    } 
+  };
+  
+  
 
   const updateDisplayName = () => {
     console.log(user.displayName)
@@ -55,9 +66,8 @@ export default function ProfileScreen({navigation}) {
   return(
       
     <View style={styles.container}>
-
     <View style={styles.profileContainer}>
-      <TouchableOpacity onPress={toggleModal} /* replace with zoom-in function*/> 
+      <TouchableOpacity /* replace with zoom-in function*/> 
         {user.photoURL ? (
           <Avatar.Image size={250} source={{ uri: user.photoURL }} />
         ) : (
@@ -68,7 +78,7 @@ export default function ProfileScreen({navigation}) {
       {/* Edit Button */}
       <TouchableOpacity
         style={styles.editButton}
-        onPress={toggleModal /* replace with edit-pfp function*/}
+        onPress={updateProfilePicture}
       >
         <Ionicons name="pencil-outline" size={24} color="#FFFFFF" />
       </TouchableOpacity>
