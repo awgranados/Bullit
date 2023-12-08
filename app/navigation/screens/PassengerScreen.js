@@ -5,16 +5,15 @@ import {CreateButton, IconButton} from 'app/app/button';
 import { Avatar, Button, Card } from 'react-native-paper';
 import { doc, setDoc, Timestamp, GeoPoint, getDoc, data} from "firebase/firestore";
 import { firestore } from "../../app/firebaseConfig";
-import auth from "../../app/firebaseConfig";
-
+import { updateProfile } from "firebase/auth";
 
 
 
 export default function ProfileScreen({navigation}) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [newDisplayName, setNewDisplayName] = useState('');
+  
   const user = auth.currentUser;
-
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -23,7 +22,7 @@ export default function ProfileScreen({navigation}) {
   //style={{ textAlign: 'right', fontSize: 15, color:"black" }}>{user.email}
   
   //const userDocRef = doc(firestore, "userDetails", user.uid);
-  // console.log(user.displayName);
+  console.log(user);
 
   
   const signOut = () => {
@@ -34,21 +33,21 @@ export default function ProfileScreen({navigation}) {
   };
 
   const updateDisplayName = () => {
-    // You should add validation for newDisplayName here if needed
-
-    // Update the user's display name
-    user.updateProfile({
-      displayName: newDisplayName,
-    })
-      .then(() => {
-        toggleModal(); // Close the modal after updating display name
-      })
-      .catch((error) => {
-        console.error('Error updating display name:', error.message);
-        // Handle error
-      });
+    if (user) {
+      if (newDisplayName.length === 0) {
+        alert("Display name cannot be blank.");
+      }
+      else{
+        updateProfile(user, {
+          displayName: newDisplayName
+        }).then(() => {
+          toggleModal();
+        }).catch((error) => {
+          console.error("Display name failed to update!", error);
+      })};
+    }
   };
-
+  
   return(
       
       <View style = {styles.container}>    
@@ -63,9 +62,10 @@ export default function ProfileScreen({navigation}) {
           <TextInput
             style={styles.modalInput}
             placeholder="Enter new display name"
-            //value={newDisplayName}
+            onChangeText={setNewDisplayName}
+            value={newDisplayName}
           />
-          <CreateButton text="Save" onPress={toggleModal} />
+          <CreateButton text="Save" onPress={updateDisplayName} />
           <CreateButton text="Cancel" onPress={toggleModal} />
         </View>
       </Modal>
