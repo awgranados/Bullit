@@ -5,6 +5,7 @@ import {CreateButton, IconButton} from 'app/app/button';
 import { Avatar, Button, Card } from 'react-native-paper';
 import { doc, setDoc, Timestamp, GeoPoint, getDoc, data} from "firebase/firestore";
 import { firestore } from "../../app/firebaseConfig";
+import auth from "../../app/firebaseConfig";
 
 
 
@@ -14,6 +15,7 @@ export default function ProfileScreen({navigation}) {
   const [newDisplayName, setNewDisplayName] = useState('');
   const user = auth.currentUser;
 
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -21,7 +23,7 @@ export default function ProfileScreen({navigation}) {
   //style={{ textAlign: 'right', fontSize: 15, color:"black" }}>{user.email}
   
   //const userDocRef = doc(firestore, "userDetails", user.uid);
-  console.log(user);
+  // console.log(user.displayName);
 
   
   const signOut = () => {
