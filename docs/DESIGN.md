@@ -41,4 +41,4 @@ Design Challenges
 2. How to display large numbers of ride details in a single screen: using collapsible to only display rides of certain group or using search filter to search through ride offers
 3. Working around libraries or implementations that are iOS exclusively such as FirebaseUI Auth vs Firebase SDK Authentication
 4. Organizing navigation between specific pages along with a navbar
-5. Organizing various databases and how variables within each database are related to each other
+5. Organizing various databases and how variables within each database are related to each other along with what database to access depending on whether the user is a driver or rider
