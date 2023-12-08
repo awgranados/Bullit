@@ -1,17 +1,21 @@
 import * as React from 'react';
 import{ useState } from 'react';
-import {View, Text, StyleSheet, Modal, TextInput} from 'react-native';
+import {View, Text, StyleSheet, Modal, TextInput, TouchableOpacity} from 'react-native';
 import {CreateButton, IconButton} from 'app/app/button';
 import { Avatar, Button, Card } from 'react-native-paper';
 import { doc, setDoc, Timestamp, GeoPoint, getDoc, data} from "firebase/firestore";
 import { firestore } from "../../app/firebaseConfig";
-import { updateProfile } from "firebase/auth";
+import { updateProfile , signOut} from "firebase/auth";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+
 
 
 
 export default function ProfileScreen({navigation}) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [newDisplayName, setNewDisplayName] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
   
   const user = auth.currentUser;
 
@@ -22,17 +26,17 @@ export default function ProfileScreen({navigation}) {
   //style={{ textAlign: 'right', fontSize: 15, color:"black" }}>{user.email}
   
   //const userDocRef = doc(firestore, "userDetails", user.uid);
-  console.log(user);
 
   
   const signOut = () => {
     if(user){
      auth.signOut;
-      navigation.navigate("Login");
+     navigation.navigate("Login");
     }
   };
 
   const updateDisplayName = () => {
+    console.log(user.displayName)
     if (user) {
       if (newDisplayName.length === 0) {
         alert("Display name cannot be blank.");
@@ -47,23 +51,42 @@ export default function ProfileScreen({navigation}) {
       })};
     }
   };
-  
+ 
   return(
       
-      <View style = {styles.container}>    
+    <View style={styles.container}>
+
+    <View style={styles.profileContainer}>
+      <TouchableOpacity onPress={toggleModal} /* replace with zoom-in function*/> 
+        {user.photoURL ? (
+          <Avatar.Image size={250} source={{ uri: user.photoURL }} />
+        ) : (
+          <Ionicons name="person-circle-outline" size={250} color="#002E5D" />
+        )}
+      </TouchableOpacity>
+
+      {/* Edit Button */}
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={toggleModal /* replace with edit-pfp function*/}
+      >
+        <Ionicons name="pencil-outline" size={24} color="#FFFFFF" />
+      </TouchableOpacity>
+    </View>
 
           <Text style={styles.header}>{user.displayName}</Text>
           <Text style = {styles.text}>{}</Text>                       
-          <CreateButton text='Edit Profile'onPress={toggleModal} />
+          <CreateButton text='Edit Display Name'onPress={toggleModal} />
           <CreateButton text='Logout' onPress={signOut}/>
           <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
           <Text style={styles.modalHeader}>Edit Display Name</Text>
           <TextInput
             style={styles.modalInput}
-            placeholder="Enter new display name"
+            placeholder={user.displayName}
             onChangeText={setNewDisplayName}
             value={newDisplayName}
+            
           />
           <CreateButton text="Save" onPress={updateDisplayName} />
           <CreateButton text="Cancel" onPress={toggleModal} />
@@ -120,5 +143,14 @@ const styles = StyleSheet.create({
     width: 250,
     height: 50,
     alignSelf: 'center'
+},
+editButton: {
+  position: 'absolute',
+  bottom: 0,
+  right: 0,
+  backgroundColor: '#002E5D',
+  padding: 10,
+  borderRadius: 50,
+  zIndex: 1, // Ensure the button is displayed on top
 },
 });
