@@ -14,8 +14,7 @@ const RideDetailScreen = ({ route }) => {
     {/* SUBSTITUTE */}
     const handleCancelRide = () => {
         cancelRide(rideDetails.id);
-        console.log('here');
-        navigation.navigate('HomePage');
+        navigation.navigate('Rides');
     };
 
     React.useEffect(() => {
