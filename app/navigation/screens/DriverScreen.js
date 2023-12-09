@@ -163,7 +163,7 @@ export default function DriverScreen({navigation}) {
                             <Text variant="bodyMedium" style={styles.text3}>Seat Price: ${offers.seatPrice}</Text>
                         </Card.Content>
                         <Card.Actions>
-                            <Button onPress={() => handleAcceptPress(destinationForCard.split(',')[0] + ", " + destination.split(',')[1], formattedDate, offers)}  style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
+                            <Button onPress={() => handleAcceptPress(destinationForCard.split(',')[0] + ", " + destinationForCard.split(',')[1], formattedDate, offers)}  style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
                         </Card.Actions>
                         </Card>)
                     );
