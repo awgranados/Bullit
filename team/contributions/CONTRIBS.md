@@ -23,3 +23,16 @@ This file documents the contribution each of the team members made.
 - Designed rides details page to have more information about the ride
 - Wrote the design document DESIGN.md
 
+## Ricardo Hinojosa
+- Created DB table structures
+- Created login screen and configured with Firebase authentication
+- Connected functions for operations that interact with Firestore DB
+- Wrote logic to update pricing, seats taken, passengers who accepted rides
+- Wrote logic to cancel rides
+- Wrote logic to pull accepted rides from DB and display in chronological order on the home screen
+- Wrote logic to pull ride offers for users that offer a ride
+- Created modal for user to confirm when accepting a ride
+- Styled the home screen with app logo
+- Created and styled the offer a ride button on home screen
+- Implemented search feature by configuring search bar in Rides tab to search by destination
+- Wrote logic to make API call to calculate trip distance and duration
