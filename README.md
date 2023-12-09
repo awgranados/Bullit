@@ -25,7 +25,7 @@ Stanley Su - StanleySu1
 Operating system: Android
 ## Installation Steps 
 ### Install by Downloading apk
-1. Go to the [Latest Github Release](https://github.com/ucsb-cs184-f23/pj-react-02/releases/tag/v1.0.1)
+1. Go to the [Latest Github Release](https://github.com/ucsb-cs184-f23/pj-react-02/releases/tag/v1.0.2)
 2. Download the carpool.apk file to your Android device
 3. Install
 4. Run the app
