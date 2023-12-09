@@ -71,14 +71,22 @@ export default function HomeScreen({ navigation }) {
   const handleExpandPosted = () => {
     setExpandedPosted(!expandedPosted);
   };
-  const isDriver = true;
+
+// const isDriver = true;
 
   const openDetailScreen = async (rideDetails, title) => {
+    offer = rideDetails;
     //fetch ride offer of accepted ride using reference
     if (title === "Upcoming Trips")
     rideDetails = await getRideOfferByReference(rideDetails.rideOffer)
 
-    navigation.navigate("RideDetail", { rideDetails });
+    // navigation.navigate("RideDetail", { rideDetails });
+   
+    if (offer.isDriver) {
+        navigation.navigate("DriversRideDetail", { rideDetails });
+      } else {
+        navigation.navigate("RideDetail", { rideDetails });
+      }
   };
 
   return (
