@@ -1,0 +1,6 @@
+- Initialized React Native project and created various buttons such as Login, Create Ride Offer, Create Ride Request
+- Implemented search bar using Google Place Autocomplete API to filter through locations to find or create rides
+- Designed frontend of home screen to display users Posted Ride Requests and Posted Ride Offers as cards in collapsible
+- Designed cards in collapsible and made them pressable to navigate from card to ride details page
+- Designed rides details page to have more information about the ride
+- Wrote the design document DESIGN.md
