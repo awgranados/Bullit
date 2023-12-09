@@ -12,6 +12,7 @@ import auth from "../../app/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile
 } from "firebase/auth";
 import validator from "validator";
 import { firestore } from "../../app/firebaseConfig";
@@ -43,8 +44,13 @@ export default function Login({ navigation }) {
           const user = userCredential.user;
           console.log("Account created successfully.");
           if (user) {
-            user.displayName = firstName + " " + lastName;
-            console.log("Display Name: ", user.displayName);
+            updateProfile(user, {
+              displayName: firstName + " " + lastName,
+            }).then(() => {
+              console.log("Display Name: ", user.displayName);
+            }).catch((error) => {
+              console.error("Display name failed to update!", error)
+            });
             navigation.navigate("MainContainer");
           }
           setDoc(doc(firestore, "userDetails", user.uid), {
