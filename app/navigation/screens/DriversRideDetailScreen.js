@@ -1,7 +1,6 @@
-import { View, Text, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Button, StyleSheet, ScrollView } from 'react-native'
 import * as React from 'react';
 import { Card, Title, Paragraph, Avatar } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native'; 
 import Entypo from "react-native-vector-icons/Entypo";
 import { getUserDetails } from '../actions/getUserDetails';
 
@@ -9,10 +8,6 @@ const DriversRideDetailScreen = ({ route }) => {
     const [tripDistance, setTripDistance] = React.useState(0);
     const [driverDetails, setDriverDetails] = React.useState()
     const { rideDetails } = route.params;
-    {/* SUBSTITUTE */}
-    const cancelRide = () => {
-        console.log('here');
-    };
 
     React.useEffect(() => {
         const fetchDriverDetails = async () => {
@@ -83,10 +78,10 @@ const DriversRideDetailScreen = ({ route }) => {
                             {/* SUBSTITUTE */}
                             <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"Rating: 4.5"}</Paragraph>
                             {/* SUBSTITUTE */}
-                            <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"Vehicle Model: "}</Paragraph>
+                            <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"Vehicle Model: Toyota Camry"}</Paragraph>
                         </View>
                         <View>
-                            <Entypo name={"star"} size={17} color={"white"} style={{ marginLeft: -30, marginTop: 9 }} />
+                            <Entypo name={"star"} size={17} color={"white"} style={{ marginLeft: -126, marginTop: 9 }} />
                         </View>
                     </Card.Content>
                 </Card>
@@ -97,7 +92,7 @@ const DriversRideDetailScreen = ({ route }) => {
                     <Card.Content style={{ alignItems: 'left' }}>
                         {/* Trip Cost */}
                         <Paragraph style={{ textAlign: 'left', fontSize: 15, color: "white" }}>
-                            {"Earnings from Ride "  + " ................  $" + Number(rideDetails.totalPrice).toFixed(2)}
+                            {"Price for Ride "  + " ................  $" + Number(rideDetails.totalPrice).toFixed(2)}
                         </Paragraph>
                         {/* Service Fee */}
                         <Paragraph style={{ textAlign: 'left', fontSize: 15, color: "white" }}>
@@ -108,26 +103,14 @@ const DriversRideDetailScreen = ({ route }) => {
                         <Card.Content style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                         {/* Total */}
                             <Paragraph style={{ fontWeight: 'bold', fontSize: 16, color: "black" }}>
-                            {"Total Cost for Passengers:"}
+                            {"Total Earnings:"}
                             </Paragraph>
                             <Paragraph style={{ fontWeight: 'bold', fontSize: 18, color: "black" }}>
-                            {"$" + (rideDetails.passengerSeatCost + 5).toFixed(2)}
+                            {"$" + (Number(rideDetails.totalPrice).toFixed(2) - 5).toFixed(2)}
                             </Paragraph>
                         </Card.Content>
                     </Card>
                 </Card>
-
-                <TouchableOpacity onPress={cancelRide}>
-                    <Card style={styles.card3}>
-                        <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                            <View>
-                                <Paragraph  style={{fontWeight: 'bold', textAlign: 'center', fontSize: 20, color:"white" }}>{"CANCEL RIDE"}</Paragraph>
-                            </View>
-                        </Card.Content>
-                    </Card>
-                </TouchableOpacity>
-
-
             </View>
         </ScrollView>
     )
@@ -138,6 +121,7 @@ export default DriversRideDetailScreen
 const styles = StyleSheet.create({
     container: {
         paddingTop: 10,
+        paddingBottom: 20,
         flex: 1,
         backgroundColor: "#D3D3D3",
     },

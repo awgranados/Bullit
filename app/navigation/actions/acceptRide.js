@@ -33,8 +33,8 @@ export default async function acceptRide(docUID) {
       newSeatsTaken = rideOffer.data().seatsTaken + 1;
       acceptedSeatPrice = rideOffer.data().seatPrice;
       await updateDoc(doc(firestore, "rideOffers", docUID), {
-        seatsTaken: newSeatsTaken,
-        passengerSeatCost: acceptedSeatPrice,
+        seatsTaken: Number(newSeatsTaken),
+        passengerSeatCost: Number(acceptedSeatPrice),
         seatPrice: adjustSeatPrice(totalPrice, newSeatsTakenForCalculation),
         passengersUserUID: arrayUnion(user.uid),
       });
@@ -58,12 +58,12 @@ export default async function acceptRide(docUID) {
         departure: rideOffer.data().departure,
         destination: rideOffer.data().destination,
         arrivalTime: rideOffer.data().arrivalTime,
-        seatsAvailable: rideOffer.data().seatsAvailable,
-        seatsTaken: newSeatsTaken,
+        seatsAvailable: Number(rideOffer.data().seatsAvailable),
+        seatsTaken: Number(newSeatsTaken),
         passengerUserUID: user.uid,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
-        rideCost: acceptedSeatPrice,
-        newSeatPrice: newSeatPrice,
+        rideCost: Number(acceptedSeatPrice),
+        newSeatPrice: Number(newSeatPrice),
       });
 
       /*
@@ -83,8 +83,8 @@ export default async function acceptRide(docUID) {
         departure: rideOffer.data().departure,
         destination: rideOffer.data().destination,
         arrivalTime: rideOffer.data().arrivalTime,
-        seatsAvailable: rideOffer.data().seatsAvailable,
-        seatsTaken: newSeatsTaken,
+        seatsAvailable: Number(rideOffer.data().seatsAvailable),
+        seatsTaken: Number(newSeatsTaken),
         driverUserUID: updatedRideOffer.data().driverUserUID,
         rideOffer: doc(firestore, "rideOffers/" + docUID),
         passengersUserUID: updatedRideOffer.data().passengersUserUID,

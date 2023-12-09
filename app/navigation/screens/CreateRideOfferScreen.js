@@ -62,10 +62,10 @@ const CreateRideOfferScreen = () => {
         destination: dest,
         arrivalTime: Timestamp.fromDate(arrivalTime),
         tripDistance: tripDistance,
-        totalPrice: fuel_price,
-        seatsAvailable: seats,
+        totalPrice: Number(fuel_price),
+        seatsAvailable: Number(seats),
         seatsTaken: 0,
-        seatPrice: fuel_price,
+        seatPrice: Number(fuel_price),
         driverUserUID: user.uid,
        });
       navigation.navigate('HomePage'); 
@@ -93,6 +93,7 @@ const CreateRideOfferScreen = () => {
     <View style={{ padding: 16 }}>
       <Text style={styles.label}>Departure</Text>
       <GooglePlacesAutocomplete
+          enablePoweredByContainer={false}
           placeholder='Currently, only allows departure from UCSB'
           fetchDetails={true}
           onPress={(data, details = null) => {
@@ -123,6 +124,7 @@ const CreateRideOfferScreen = () => {
 
       <Text style={styles.label}>Destination</Text>
       <GooglePlacesAutocomplete
+        enablePoweredByContainer={false}
         placeholder='Please enter a city'
         fetchDetails={true}
         onPress={(data, details = null) => {
