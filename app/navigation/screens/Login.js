@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import React, { useState } from "react";
-import { TextInput, Text, Button, SegmentedButtons } from "react-native-paper";
+import { TextInput, Text, Button, } from "react-native-paper";
 import auth from "../../app/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
@@ -24,7 +24,6 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signingIn, setSigningIn] = useState(true);
-  const [segButtonValue, setSegButtonValue] = useState("Authentication Off");
 
   const createUserWithNameEmailAndPassword = async () => {
     if (firstName.length === 0) {
@@ -51,7 +50,6 @@ export default function Login({ navigation }) {
             }).catch((error) => {
               console.error("Display name failed to update!", error)
             });
-            navigation.navigate("MainContainer");
           }
           setDoc(doc(firestore, "userDetails", user.uid), {
             accountCreated: Timestamp.now(),
@@ -60,6 +58,7 @@ export default function Login({ navigation }) {
             lastName: lastName,
             verifiedDriver: false,
           });
+          navigation.navigate("MainContainer");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -72,25 +71,21 @@ export default function Login({ navigation }) {
   };
 
   const handleButtonPress = async () => {
-    if (segButtonValue == "Authentication On") {
-      if (signingIn) {
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log("Signed in successfully.");
-            navigation.navigate("MainContainer");
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorMessage);
-          });
-      } else {
-        createUserWithNameEmailAndPassword();
-      }
+    if (signingIn) {
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log("Signed in successfully.");
+          navigation.navigate("MainContainer");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+        });
     } else {
-      navigation.navigate("MainContainer");
+      createUserWithNameEmailAndPassword();
     }
   };
 
@@ -99,8 +94,7 @@ export default function Login({ navigation }) {
   };
 
   let buttonLabel;
-  if (segButtonValue == "Authentication Off") buttonLabel = "Continue";
-  else if (signingIn) buttonLabel = "Login";
+  if (signingIn) buttonLabel = "Login";
   else buttonLabel = "Sign Up";
 
   return (
@@ -169,21 +163,6 @@ export default function Login({ navigation }) {
             )}
           </TouchableOpacity>
         </View>
-        <SegmentedButtons
-          style={styles.authToggle}
-          value={segButtonValue}
-          onValueChange={setSegButtonValue}
-          buttons={[
-            {
-              value: "Authentication On",
-              label: "Authentication On",
-            },
-            {
-              value: "Authentication Off",
-              label: "Authentication Off",
-            },
-          ]}
-        />
       </ScrollView>
     </TouchableWithoutFeedback>
   );
