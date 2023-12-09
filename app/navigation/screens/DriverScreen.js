@@ -111,6 +111,8 @@ export default function DriverScreen({navigation}) {
                     const passengersUserUID = offers.passengersUserUID;
                     const driverUserUID = offers.driverUserUID;
                     const offerDestination = offers.destination;
+                    const seatsTaken = offers.seatsTaken;
+                    const seatsAvailable = offers.seatsAvailable;
                     let showOffer = true;
                     
                     
@@ -124,6 +126,8 @@ export default function DriverScreen({navigation}) {
                     if (driverUserUID){
                         if (user.uid === driverUserUID) showOffer = false;
                     }
+                    if (seatsTaken == searchIconColor) showOffer = false;
+                    
                     if (destination !== "") {
                         if (destination) {
                             if (destination !== offerDestination){
