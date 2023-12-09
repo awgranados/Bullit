@@ -5,7 +5,7 @@ import {CreateButton, IconButton} from 'app/app/button';
 import { Avatar, Button, Card } from 'react-native-paper';
 import { doc, setDoc, Timestamp, GeoPoint, getDoc, data} from "firebase/firestore";
 import { firestore } from "../../app/firebaseConfig";
-import { updateProfile , signOut} from "firebase/auth";
+import { updateProfile} from "firebase/auth";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from 'expo-image-picker';
 
@@ -13,10 +13,13 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 export default function ProfileScreen({navigation}) {
+  const user = auth.currentUser;
   const [isModalVisible, setModalVisible] = useState(false);
   const [newDisplayName, setNewDisplayName] = useState('');
+  const [profilePicture, setNewProfilePicture] = useState(user.photoURL);
+
   
-  const user = auth.currentUser;
+  
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -36,6 +39,7 @@ export default function ProfileScreen({navigation}) {
     });
   
     if (!result.canceled) {
+      setNewProfilePicture(result.assets[0].uri)
       updateProfile(user, {
         photoURL: result.assets[0].uri
       })
@@ -68,8 +72,8 @@ export default function ProfileScreen({navigation}) {
     <View style={styles.container}>
     <View style={styles.profileContainer}>
       <TouchableOpacity /* replace with zoom-in function*/> 
-        {user.photoURL ? (
-          <Avatar.Image size={250} source={{ uri: user.photoURL }} />
+        {profilePicture ? (
+          <Avatar.Image size={250} source={{ uri: profilePicture }} />
         ) : (
           <Ionicons name="person-circle-outline" size={250} color="#002E5D" />
         )}
