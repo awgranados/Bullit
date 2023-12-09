@@ -78,14 +78,16 @@ export default function HomeScreen({ navigation }) {
     offer = rideDetails;
     //fetch ride offer of accepted ride using reference
     if (title === "Upcoming Trips")
-    rideDetails = await getRideOfferByReference(rideDetails.rideOffer)
-
-    // navigation.navigate("RideDetail", { rideDetails });
+      rideDetails = await getRideOfferByReference(rideDetails.rideOffer)
    
+    if (title === "Your Ride Offers")
+      navigation.navigate("Driver's Ride Details", { rideDetails });
+
     if (offer.isDriver) {
-        navigation.navigate("DriversRideDetail", { rideDetails });
+        navigation.navigate("Driver's Ride Details", { rideDetails });
       } else {
-        navigation.navigate("RideDetail", { rideDetails });
+        if (title !== "Your Ride Offers")
+        navigation.navigate("Ride Details", { rideDetails });
       }
   };
 

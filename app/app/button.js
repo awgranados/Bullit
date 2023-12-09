@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         paddingHorizontal: 10,
         backgroundColor: '#FF4618',
-        width: 250,
-        height: 50,
+        width: 220,
+        height: 46,
         alignSelf: 'center'
     },
     iconbutton: {
