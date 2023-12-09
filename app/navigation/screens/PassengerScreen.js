@@ -70,6 +70,12 @@ export default function ProfileScreen({navigation}) {
   return(
       
     <View style={styles.container}>
+      <View style={{alignItems:'center'}}>
+        <Text
+            style = {styles.text2}>User Profile
+        </Text>
+      </View>
+      <View style={{borderColor: "#EFEFF0", borderWidth: 1.7, width: "100%", marginTop:-50, marginBottom: 30} }></View>
     <View style={styles.profileContainer}>
       <TouchableOpacity /* replace with zoom-in function*/> 
         {profilePicture ? (
@@ -91,6 +97,7 @@ export default function ProfileScreen({navigation}) {
           <Text style={styles.header}>{user.displayName}</Text>
           <Text style = {styles.text}>{}</Text>                       
           <CreateButton text='Edit Display Name'onPress={toggleModal} />
+          <View style={{height:20}}></View>
           <CreateButton text='Logout' onPress={signOut}/>
           <Modal visible={isModalVisible} animationType="slide">
         <View style={styles.modalContainer}>
@@ -119,10 +126,11 @@ const styles = StyleSheet.create({
       backgroundColor: "#FFFFFF",
   },
   header: {
-      fontSize: 35,
+      fontSize: 26,
       fontWeight: "bold", 
-      padding: 10, 
-      color: '#002E5D'
+      paddingTop: 14, 
+      color: '#002E5D',
+      marginTop: 18
   },
   text: {
       fontSize: 20,
@@ -130,6 +138,13 @@ const styles = StyleSheet.create({
       padding: 3, 
       color: '#002E5D'
   },
+  text2: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: "#00366e",
+    marginTop: -100,
+    marginBottom: 60
+},
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -156,7 +171,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF4618',
     width: 250,
     height: 50,
-    alignSelf: 'center'
+    alignSelf: 'center',
 },
 editButton: {
   position: 'absolute',
