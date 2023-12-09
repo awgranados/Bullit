@@ -10,10 +10,10 @@ const HomeStack = createStackNavigator();
 function HomeNavigator() {
   return (
     <HomeStack.Navigator initialRouteName="HomePage">
-      <HomeStack.Screen name="HomePage" component={HomeScreen} options={{ headerShown: false }} />
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <HomeStack.Screen name="Create Ride Offer" component={CreateRideOfferScreen} />
-      <HomeStack.Screen name="RideDetail" component={RideDetailScreen} />
-      <HomeStack.Screen name="DriversRideDetail" component={DriversRideDetailScreen} />
+      <HomeStack.Screen name="Ride Details" component={RideDetailScreen} />
+      <HomeStack.Screen name="Driver's Ride Details" component={DriversRideDetailScreen} />
     </HomeStack.Navigator>
   );
 }
