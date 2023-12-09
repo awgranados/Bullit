@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ScrollView, View, Text, StyleSheet, TextInput} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, TextInput, Modal} from 'react-native';
 import {CreateButton} from 'app/app/button';
 import RideContext from '../context/RideContext';
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
@@ -23,6 +23,23 @@ export default function DriverScreen({navigation}) {
     const [searchBoxColor, setSearchBoxColor] = React.useState("#c4c4c4")
 
     const autocompleteRef = React.useRef(null);
+    const [isModalVisible, setModalVisible] = React.useState(false);
+    const [cardDestination, setCardDestination] = React.useState("");
+    const [cardDate, setCardDate] = React.useState("");
+    const [cardOffer, setCardOffer] = React.useState();
+
+
+
+    const handleAcceptPress = (newCardDestination, newCardDate, offer) => {
+        setCardDestination(newCardDestination);
+        setCardDate(newCardDate);
+        setCardOffer(offer);
+        toggleModal();
+    };
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    }
 
     const handleSearchClear = (text) => {
         if (text === ""){
@@ -89,10 +106,13 @@ export default function DriverScreen({navigation}) {
                     </View>
                     <ScrollView style={styles.list}>
                     {rideOffers.map((offers, index) => {
+                    const destination = offers.destination;
                     const departureDate = offers.departureTime.toDate();
                     const passengersUserUID = offers.passengersUserUID;
                     const driverUserUID = offers.driverUserUID;
                     const offerDestination = offers.destination;
+                    const seatsTaken = offers.seatsTaken;
+                    const seatsAvailable = offers.seatsAvailable;
                     let showOffer = true;
                     
                     
@@ -106,6 +126,8 @@ export default function DriverScreen({navigation}) {
                     if (driverUserUID){
                         if (user.uid === driverUserUID) showOffer = false;
                     }
+                    if (seatsTaken == searchIconColor) showOffer = false;
+                    
                     if (destination !== "") {
                         if (destination) {
                             if (destination !== offerDestination){
@@ -141,11 +163,25 @@ export default function DriverScreen({navigation}) {
                             <Text variant="bodyMedium" style={styles.text3}>Seat Price: ${offers.seatPrice}</Text>
                         </Card.Content>
                         <Card.Actions>
-                            <Button onPress={() => acceptRide(offers.id)} style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
+                            <Button onPress={() => handleAcceptPress(destination.split(',')[0] + ", " + destination.split(',')[1], formattedDate, offers)}  style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
                         </Card.Actions>
                         </Card>)
                     );
                     })}</ScrollView>
+                    <Modal visible={isModalVisible} animationType="slide">
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.modalHeader}>Do you want to accept this ride?</Text>
+                            <Text style={styles.modalText} >{cardDestination}</Text>
+                            <Text style={styles.modalText}>{cardDate}</Text>
+                            <View style={{height:20}}></View>
+                            <CreateButton onPress={() => {
+                                acceptRide(cardOffer.id)
+                                toggleModal()
+                                }} text="Confirm" />
+                            <View style={{height:20}}></View>
+                            <CreateButton text="Cancel" onPress={toggleModal} />
+                        </View>
+                    </Modal>
                 </View>
             </View>
     );
@@ -183,6 +219,26 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         gap:10,
         marginBottom: 120
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+    },
+    modalHeader: {
+        fontFamily:"Montserrat-SemiBold",
+        fontSize: 17,
+        marginBottom: 40
+    },
+    modalText: {
+        fontFamily: "Montserrat-Medium",
+        fontSize: 17,
+        borderColor: "gray",
+        borderWidth: 2,
+        borderRadius: 4,
+        padding: 4,
+        marginBottom: 8
     }
 });
 
