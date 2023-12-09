@@ -41,6 +41,8 @@ export default function DriverScreen({navigation}) {
         setSearchBoxColor("#c4c4c4");
     };
 
+    let resultsCount = 0;
+
     return(
             <View  style={styles.container}>
                 <View style={{alignItems:'center'}}>
@@ -92,7 +94,7 @@ export default function DriverScreen({navigation}) {
                     const driverUserUID = offers.driverUserUID;
                     const offerDestination = offers.destination;
                     let showOffer = true;
-                    let foundResult = false;
+                    
                     
                     
                         
@@ -109,7 +111,9 @@ export default function DriverScreen({navigation}) {
                             if (destination !== offerDestination){
                                 showOffer = false;
                             }
-                            else  foundResult = true;
+                            else {
+                                if (showOffer) resultsCount++;
+                            }
                         }
                         
                      }
@@ -122,7 +126,7 @@ export default function DriverScreen({navigation}) {
                     };
 
                     const formattedDate = departureDate.toLocaleDateString('en-US', options);
-                    if (index === rideOffers.length - 1 && foundResult) return (<Text key={index} style={{ fontSize: 16, fontWeight: "600", marginTop: 20, textAlign: "center"}}>No rides found.</Text>)
+                    if (index == (rideOffers.length - 1) && resultsCount === 0 && destination.length != 0) return (<Text key={index} style={{ fontSize: 16, fontWeight: "600", marginTop: 20, textAlign: "center"}}>No rides found.</Text>)
                     else
                     return (
                         showOffer && 
