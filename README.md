@@ -31,6 +31,7 @@ Operating system: Android
 4. Run the app
 ### Install by web link
 1. On you Android device, go to [Expo build](https://expo.dev//accounts/hao_wu/projects/app/builds/18cf4d29-11ce-4b12-a91b-f989b7acd2f3) or scan the QR code:
+
 ![image](https://github.com/ucsb-cs184-f23/pj-react-02/assets/33027568/acb572cc-20c9-4ad3-9a85-fc4912600fa9)
 
 
