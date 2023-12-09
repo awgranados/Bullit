@@ -4,14 +4,18 @@ import { Card, Title, Paragraph, Avatar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native'; 
 import Entypo from "react-native-vector-icons/Entypo";
 import { getUserDetails } from '../actions/getUserDetails';
+import cancelRide from "../actions/cancelRide"
 
 const RideDetailScreen = ({ route }) => {
     const [tripDistance, setTripDistance] = React.useState(0);
     const [driverDetails, setDriverDetails] = React.useState()
     const { rideDetails } = route.params;
+    const navigation = useNavigation();
     {/* SUBSTITUTE */}
-    const cancelRide = () => {
+    const handleCancelRide = () => {
+        cancelRide(rideDetails.id);
         console.log('here');
+        navigation.navigate('HomePage');
     };
 
     React.useEffect(() => {
@@ -83,10 +87,10 @@ const RideDetailScreen = ({ route }) => {
                             {/* SUBSTITUTE */}
                             <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"Rating: 4.5"}</Paragraph>
                             {/* SUBSTITUTE */}
-                            <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"Vehicle Model: "}</Paragraph>
+                            <Paragraph  style={{ textAlign: 'left', fontSize: 15, color:"white" }}>{"Vehicle Model: Toyota Camry"}</Paragraph>
                         </View>
                         <View>
-                            <Entypo name={"star"} size={17} color={"white"} style={{ marginLeft: -30, marginTop: 9 }} />
+                            <Entypo name={"star"} size={17} color={"white"} style={{ marginLeft: -126, marginTop: 9 }} />
                         </View>
                     </Card.Content>
                 </Card>
@@ -115,7 +119,7 @@ const RideDetailScreen = ({ route }) => {
                     </Card.Content>
                 </Card>
 
-                <TouchableOpacity onPress={cancelRide}>
+                <TouchableOpacity onPress={handleCancelRide}>
                     <Card style={styles.card3}>
                         <Card.Content style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                             <View>
