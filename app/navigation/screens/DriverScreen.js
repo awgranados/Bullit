@@ -106,7 +106,7 @@ export default function DriverScreen({navigation}) {
                     </View>
                     <ScrollView style={styles.list}>
                     {rideOffers.map((offers, index) => {
-                    const destination = offers.destination;
+                    const destinationForCard = offers.destination;
                     const departureDate = offers.departureTime.toDate();
                     const passengersUserUID = offers.passengersUserUID;
                     const driverUserUID = offers.driverUserUID;
@@ -126,7 +126,7 @@ export default function DriverScreen({navigation}) {
                     if (driverUserUID){
                         if (user.uid === driverUserUID) showOffer = false;
                     }
-                    if (seatsTaken == searchIconColor) showOffer = false;
+                    if (seatsTaken === seatsAvailable) showOffer = false;
                     
                     if (destination !== "") {
                         if (destination) {
@@ -163,7 +163,7 @@ export default function DriverScreen({navigation}) {
                             <Text variant="bodyMedium" style={styles.text3}>Seat Price: ${offers.seatPrice}</Text>
                         </Card.Content>
                         <Card.Actions>
-                            <Button onPress={() => handleAcceptPress(destination.split(',')[0] + ", " + destination.split(',')[1], formattedDate, offers)}  style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
+                            <Button onPress={() => handleAcceptPress(destinationForCard.split(',')[0] + ", " + destination.split(',')[1], formattedDate, offers)}  style={styles.button}><Text style={styles.text3}>Accept Ride</Text></Button>
                         </Card.Actions>
                         </Card>)
                     );
