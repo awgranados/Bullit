@@ -97,7 +97,7 @@ const DriversRideDetailScreen = ({ route }) => {
                     <Card.Content style={{ alignItems: 'left' }}>
                         {/* Trip Cost */}
                         <Paragraph style={{ textAlign: 'left', fontSize: 15, color: "white" }}>
-                            {"Earnings from Ride "  + " ................  $" + rideDetails.passengerSeatCost.toFixed(2)}
+                            {"Earnings from Ride "  + " ................  $" + Number(rideDetails.totalPrice).toFixed(2)}
                         </Paragraph>
                         {/* Service Fee */}
                         <Paragraph style={{ textAlign: 'left', fontSize: 15, color: "white" }}>
