@@ -68,7 +68,8 @@ const CreateRideOfferScreen = () => {
         seatPrice: Number(fuel_price),
         driverUserUID: user.uid,
        });
-      navigation.navigate('HomePage'); 
+       
+      navigation.navigate('Rides'); 
     };
     
     const onDateChange = (event, selectedDate) => {
