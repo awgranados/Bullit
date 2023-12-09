@@ -110,6 +110,7 @@ export default function ProfileScreen({navigation}) {
             
           />
           <CreateButton text="Save" onPress={updateDisplayName} />
+          <View style={{height:20}}></View>
           <CreateButton text="Cancel" onPress={toggleModal} />
         </View>
       </Modal>
