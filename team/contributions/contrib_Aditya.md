@@ -1,0 +1,5 @@
+- App idea and name (BULLIT).
+- Design of basic app layout and screens.
+- Implemented launch animation for the app.
+- Created a new page for drivers to see ride details (different from passengers)
+- Edited Create Ride Offer Screen to take in extra inputs for rides from drivers.
