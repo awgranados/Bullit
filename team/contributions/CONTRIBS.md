@@ -1,5 +1,12 @@
 This file documents the contribution each of the team members made.
 
+## Aditya Patil
+- App idea and name (BULLIT).
+- Design of basic app layout and screens.
+- Implemented launch animation for the app.
+- Created a new page for drivers to see ride details (different from passengers)
+- Edited Create Ride Offer Screen to take in extra inputs for rides from drivers.
+
 ## Alexander Granados
 - Created first iteration of tab navigator to toggle between screens
 - Contributed towards the first iteration of the driver screen, rider screen, and home screen
