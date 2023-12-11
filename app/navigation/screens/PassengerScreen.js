@@ -158,6 +158,12 @@ const styles = StyleSheet.create({
     height: 50,
     alignSelf: 'center'
 },
+buttonContainer: {
+  marginTop: 20, 
+  width: '100%', 
+  alignItems: 'center',
+  marginBottom: 20,
+},
 editButton: {
   position: 'absolute',
   bottom: 0,
